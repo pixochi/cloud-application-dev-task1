@@ -10,8 +10,15 @@ namespace CloudApplictionDevTask1Tests
         [TestMethod]
         public void DataMixedWithCommentsIsInvalid()
         {
-            string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(Dummies.textContentDummy());
+            string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(Dummies.DataMixedWithComments());
             Assert.AreNotEqual(errorMsg, "");
+        }
+
+        [TestMethod]
+        public void DataNotMixedWithCommentsIsValid()
+        {
+            string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(Dummies.DataNotMixedWithComments());
+            Assert.AreEqual(errorMsg, "");
         }
     }
 }
