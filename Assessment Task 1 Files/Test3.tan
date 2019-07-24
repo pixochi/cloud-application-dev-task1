@@ -1,0 +1,27 @@
+// The name of the configuration file.
+CONFIG-FILE,"C:\temp\SIT323\Test3.csv"
+
+// The number of tasks and processors per allocation.
+TASKS,5
+PROCESSORS,3
+
+// The number of allocations in this file.
+ALLOCATIONS,8
+
+// The set of allocations.
+// The ith row is the allocation of tasks to the ith processor.
+// The jth column is the allocation of the jth task to a processor.
+ALLOCATION-ID,1
+1,1,0,0,0
+0,0,1,1,0
+0,0,0,0,1
+
+ALLOCATION-ID,2
+1,1,0,0,0
+0,0,0,0,0
+0,0,1,1,0
+
+ALLOCATION-ID,3
+1,1,0,0,0
+0,1,1,0,0
+0,0,1,1,0

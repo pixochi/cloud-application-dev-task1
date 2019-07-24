@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CloudApplicationDevTask1;
 
 namespace CloudApplictionDevTask1Tests
 {
@@ -7,8 +8,10 @@ namespace CloudApplictionDevTask1Tests
     public class TaskAllocationFileValidatorTest
     {
         [TestMethod]
-        public void TestMethod1()
+        public void DataMixedWithCommentsIsInvalid()
         {
+            string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(Dummies.textContentDummy());
+            Assert.AreNotEqual(errorMsg, "");
         }
     }
 }

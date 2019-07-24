@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudApplicationDevTask1", "CloudApplicationDevTask1\CloudApplicationDevTask1.csproj", "{27C82708-6D79-48BB-8F0A-817783E7FB3E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudApplicationDevTask1Tests", "CloudApplictionDevTask1Tests\CloudApplicationDevTask1Tests.csproj", "{AF5CBF91-94E5-4037-973B-D5FA5B442654}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{27C82708-6D79-48BB-8F0A-817783E7FB3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27C82708-6D79-48BB-8F0A-817783E7FB3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27C82708-6D79-48BB-8F0A-817783E7FB3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF5CBF91-94E5-4037-973B-D5FA5B442654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF5CBF91-94E5-4037-973B-D5FA5B442654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF5CBF91-94E5-4037-973B-D5FA5B442654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF5CBF91-94E5-4037-973B-D5FA5B442654}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
