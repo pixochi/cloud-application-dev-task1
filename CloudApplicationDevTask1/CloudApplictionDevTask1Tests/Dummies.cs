@@ -24,5 +24,20 @@ namespace CloudApplictionDevTask1Tests
                 PROCESSORS,3
             ";
         }
+
+        public static string ValidConfigPath()
+        {
+            return @"
+                CONFIGURATION,""C:\\temp\config.csv""
+                TASKS,5
+            ";
+        }
+
+        public static string InvalidConfigPath()
+        {
+            return @"
+                TASKS,5
+            ";
+        }
     }
 }

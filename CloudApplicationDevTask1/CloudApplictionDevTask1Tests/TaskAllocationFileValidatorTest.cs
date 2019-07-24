@@ -20,5 +20,21 @@ namespace CloudApplictionDevTask1Tests
             string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(Dummies.DataNotMixedWithComments());
             Assert.AreEqual(errorMsg, "");
         }
+
+        [TestMethod]
+        public void ContainsValidConfigPath()
+        {
+            string errorMsg = TaskAllocationFileValidator.ContainsValidConfigPath(Dummies.ValidConfigPath());
+
+            Assert.AreEqual(errorMsg, "");
+        }
+
+        [TestMethod]
+        public void ContainsInvalidConfigPath()
+        {
+            string errorMsg = TaskAllocationFileValidator.ContainsValidConfigPath(Dummies.InvalidConfigPath());
+
+            Assert.AreNotEqual(errorMsg, "");
+        }
     }
 }

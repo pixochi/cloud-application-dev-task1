@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace CloudApplicationDevTask1
 {
@@ -18,6 +19,25 @@ namespace CloudApplicationDevTask1
                 }
      
                 return errorMsg;
+            }
+        }
+
+        public static string ContainsValidConfigPath(string fileContent)
+        {
+            using (StringReader reader = new StringReader(fileContent)) {
+                bool isConfigPathValid = false;
+                string line;
+                Regex rx = new Regex(@"CONFIGURATION,"".*\.csv""");
+                while ((line = reader.ReadLine()) != null && !isConfigPathValid) {
+                    line = line.Trim();
+                    MatchCollection matches = rx.Matches(line);
+
+                    if (matches.Count == 1) {
+                        isConfigPathValid = true;
+                    }
+                }
+
+                return isConfigPathValid ? "" : "The provided CONFIGURATION is invalid";
             }
         }
     }
