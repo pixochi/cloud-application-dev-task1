@@ -116,7 +116,7 @@ namespace CloudApplictionDevTask1Tests
             
         }
 
-        internal static string InvalidAllocationCount()
+        public static string InvalidAllocationCount()
         {
             return @"
                 ALLOCATIONS,2
@@ -124,6 +124,19 @@ namespace CloudApplictionDevTask1Tests
                 ALLOCATION-ID,1
                 1,1,0,0,0
                 0,0,1,1,0
+                0,0,0,0,1
+            ";
+        }
+
+        public static string InvalidTaskAllocation()
+        {
+            // A task(T1) cannot be assigned to more than one processor(P1, P2)
+            return @"
+                ALLOCATIONS,1
+
+                ALLOCATION-ID,1
+                1,1,0,0,0
+                1,0,1,1,0
                 0,0,0,0,1
             ";
         }

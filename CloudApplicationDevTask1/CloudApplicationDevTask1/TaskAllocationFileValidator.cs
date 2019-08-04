@@ -9,7 +9,8 @@ namespace CloudApplicationDevTask1
     public class TaskAllocationFileValidator
     {
         public static Dictionary<string, string> AllocationErrors = new Dictionary<string, string>(){
-            {"WrongAllocationCount", "The number of allocations is not correct" }
+            {"WrongAllocationCount", "The number of allocations is not correct" },
+            {"InvalidTaskAllocation", "Tasks are incorrectly assigned to processors" }
         };
 
         // Mixing data and a comment on one line is not allowed
@@ -125,27 +126,39 @@ namespace CloudApplicationDevTask1
         {
             string errorMsg = "";
             int allocationConfigCount = 0;
-            int allocationCount = 0;
+            int totalAllocationCount = 0;
 
             using (StringReader reader = new StringReader(fileContent)) {
                 string line;
-                Regex allocationCountRx = new Regex(@"ALLOCATIONS,(\d)");
-                Regex allocationConfigCountRx = new Regex(@"ALLOCATION-ID,\d");
+                Regex totalAllocationCountRx = new Regex(@"ALLOCATIONS,(\d)");
+                Regex singleAllocationRx = new Regex(@"ALLOCATION-ID,(\d)");
+                
                 while ((line = reader.ReadLine()) != null) {
                     line = line.Trim();
-                    Match allocationCountMatch = allocationCountRx.Match(line);
-                    Match allocationConfigCountMatch = allocationConfigCountRx.Match(line);
+                    Match totalAllocationCountMatch = totalAllocationCountRx.Match(line);
+                    Match singleAllocationMatch = singleAllocationRx.Match(line);
 
-                    if (allocationCountMatch.Success) {
-                        allocationCount = UInt16.Parse(allocationCountMatch.Groups[1].Value);
+                    if (totalAllocationCountMatch.Success) {
+                        totalAllocationCount = UInt16.Parse(totalAllocationCountMatch.Groups[1].Value);
                     }
-                    else if (allocationConfigCountMatch.Success) {
+                    else if (singleAllocationMatch.Success) {
                         allocationConfigCount++;
+                        // TODO: read tasks per processor and check validity
+                        string allocationId = singleAllocationMatch.Groups[1].Value;
+                        List<string> processors = new List<string>();
+                        while ((line = reader.ReadLine()) != null && Allocation.IsProcessorLine(line)) {
+                            processors.Add(line);
+                        }
+                        Console.WriteLine(processors);
+                        Allocation allocation = new Allocation(allocationId, processors);
+                        if (!allocation.IsAllocationValid()) {
+                            return AllocationErrors["InvalidTaskAllocation"];
+                        }
                     }
                 }
             }
 
-            if (allocationConfigCount != allocationCount) {
+            if (allocationConfigCount != totalAllocationCount) {    
                 return TaskAllocationFileValidator.AllocationErrors["WrongAllocationCount"];
             }
 

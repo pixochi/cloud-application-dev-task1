@@ -91,5 +91,12 @@ namespace CloudApplictionDevTask1Tests
             string errorMsg = TaskAllocationFileValidator.ContainsValidAllocations(Dummies.InvalidAllocationCount());
             Assert.AreEqual(TaskAllocationFileValidator.AllocationErrors["WrongAllocationCount"], errorMsg);
         }
+
+        [TestMethod]
+        public void InvalidTaskAllocation()
+        {
+            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocations(Dummies.InvalidTaskAllocation());
+            Assert.AreEqual(TaskAllocationFileValidator.AllocationErrors["InvalidTaskAllocation"], errorMsg);
+        }
     }
 }
