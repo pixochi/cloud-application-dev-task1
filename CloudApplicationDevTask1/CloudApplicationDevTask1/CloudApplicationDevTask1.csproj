@@ -52,10 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Allocation.cs" />
-    <Compile Include="FileService.cs" />
+    <Compile Include="Validators\ConfigFileValidator.cs" />
+    <Compile Include="Validators\FileValidator.cs" />
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TaskAllocationFileValidator.cs" />
+    <Compile Include="Validators\TaskAllocationFileValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -6,29 +6,12 @@ using System.Text.RegularExpressions;
 namespace CloudApplicationDevTask1
 {
 
-    public class TaskAllocationFileValidator
+    public class TaskAllocationFileValidator: FileValidator 
     {
         public static Dictionary<string, string> AllocationErrors = new Dictionary<string, string>(){
             {"WrongAllocationCount", "The number of allocations is not correct" },
             {"InvalidTaskAllocation", "Tasks are incorrectly assigned to processors" }
         };
-
-        // Mixing data and a comment on one line is not allowed
-        public static string DataMixedWithComments(string fileContent)
-        {
-            using (StringReader reader = new StringReader(fileContent)) {
-                string errorMsg = "";
-                string line;
-                while ((line = reader.ReadLine()) != null && errorMsg == "") {
-                    line = line.Trim();
-                    if (!line.StartsWith("//") && line.Contains("//")) {
-                        errorMsg = "Mixing data and a comment on one line is not allowed";
-                    }
-                }
-     
-                return errorMsg;
-            }
-        }
 
         // There will be a line containing the file name of a configuration file.
         // It commences with the keyword CONFIGURATION, followed by a comma,
@@ -143,7 +126,7 @@ namespace CloudApplicationDevTask1
                     }
                     else if (singleAllocationMatch.Success) {
                         allocationConfigCount++;
-                        // TODO: read tasks per processor and check validity
+                        // Read tasks per processor and check validity
                         string allocationId = singleAllocationMatch.Groups[1].Value;
                         List<string> processors = new List<string>();
                         while ((line = reader.ReadLine()) != null && Allocation.IsProcessorLine(line)) {

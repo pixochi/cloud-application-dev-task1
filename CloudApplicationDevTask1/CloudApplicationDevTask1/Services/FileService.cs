@@ -9,14 +9,16 @@ namespace CloudApplicationDevTask1
 {
     class FileService
     {
+        // Inspired by:
         // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-read-text-from-a-file
         public static string ReadFile(string path)
         {
-            try {   // Open the text file using a stream reader.
+            try {
+                // Open the text file using a stream reader.
                 using (StreamReader sr = new StreamReader(path)) {
                     // Read the stream to a string, and write the string to the console.
-                    String line = sr.ReadToEnd();
-                    return line;
+                    string fileContent = sr.ReadToEnd();
+                    return fileContent;
                 }
             }
             catch (IOException e) {

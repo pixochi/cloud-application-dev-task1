@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CloudApplictionDevTask1Tests
 {
-    class Dummies
+    class TaskAllocationFileDummies
     {
         public static string DataMixedWithComments()
         {

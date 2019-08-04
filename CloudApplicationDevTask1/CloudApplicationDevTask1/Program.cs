@@ -11,7 +11,7 @@ namespace CloudApplicationDevTask1
     {
         static void Main(string[] args)
         {
-            string filePath = System.IO.Path.GetFullPath("..\\..\\..\\..\\Task_1_Files\\Test2.tan");
+            string filePath = System.IO.Path.GetFullPath("..\\..\\..\\..\\Task_1_Files\\Test1.tan");
             string fileContent = FileService.ReadFile(filePath);
             Console.Write(fileContent);
             Console.ReadKey();
