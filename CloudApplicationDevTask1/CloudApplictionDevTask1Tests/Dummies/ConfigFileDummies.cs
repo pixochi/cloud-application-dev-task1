@@ -61,5 +61,56 @@ namespace CloudApplictionDevTask1Tests.Dummies
                 PROGRAM-PROCESSORS,3
             ";
         }
+
+        public static string ValidFrequency()
+        {
+            return @"
+                // Task runtimes are based on tasks executing on
+                // a processor running at the following frequency (GHz).
+                RUNTIME-REFERENCE-FREQUENCY,2
+            ";
+        }
+
+        public static string InvalidFrequency()
+        {
+            return @"
+                Config without frequency
+            ";
+        }
+
+        public static string ValidRuntimes()
+        {
+            return @"   
+                // Task IDs and their runtime values.
+                TASK-ID,RUNTIME
+                1,1
+                2,3
+                3,5
+                4,7
+                5,9
+            ";
+        }
+
+        public static string InvalidRuntimes()
+        {
+            return @"   
+                // Task IDs and their runtime values.
+                TASK-ID,RUNTIME
+                something else
+            ";
+        }
+
+        public static string InvalidRuntimesIds()
+        {
+            return @"   
+                // The task with id 1 is specified twice
+                TASK-ID,RUNTIME
+                1,1
+                1,3
+                3,5
+                4,7
+                5,9
+            ";
+        }
     }
 }

@@ -132,7 +132,6 @@ namespace CloudApplicationDevTask1
                         while ((line = reader.ReadLine()) != null && Allocation.IsProcessorLine(line)) {
                             processors.Add(line);
                         }
-                        Console.WriteLine(processors);
                         Allocation allocation = new Allocation(allocationId, processors);
                         if (!allocation.IsAllocationValid()) {
                             return AllocationErrors["InvalidTaskAllocation"];

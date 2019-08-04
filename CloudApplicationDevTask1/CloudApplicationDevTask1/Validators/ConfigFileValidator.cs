@@ -12,7 +12,10 @@ namespace CloudApplicationDevTask1.validators
         public static Dictionary<string, string> ConfigErrors = new Dictionary<string, string>(){
             {"LogFilePath", "The config file contains an invalid path to a log file."},
             {"LimitSection", "The config file contains an invalid section of minimum and maximum limits for the number of tasks, the number of processors, and the processor frequencies."},
-            {"ParallelSection", "The config file contains an invalid section containing data related to the parallel program."}
+            {"ParallelSection", "The config file contains an invalid section containing data related to the parallel program."},
+            {"Frequency", "The config file contains an invalid frequency of a reference processor"},
+            {"Runtimes", "The config file contains an invalid section containing tasks runtimes." },
+            {"RuntimesIds", "The config file contains repeating task ids"}
         };
 
         public static string ContainsLogFilePath(string fileContent)
@@ -40,5 +43,40 @@ namespace CloudApplicationDevTask1.validators
 
             return isValid ? "" : ConfigErrors["ParallelSection"];
         }
+
+        public static string ContainsFrequency(string fileContent)
+        {
+            Regex frequencyConfigRx = new Regex(@"RUNTIME-REFERENCE-FREQUENCY,\d+");
+            bool isValid = ContainsRegex(fileContent, frequencyConfigRx);
+
+            return isValid ? "" : ConfigErrors["Frequency"];
+        }
+
+        public static string ContainsRuntimes(string fileContent)
+        {
+            Regex runtimeRx = new Regex(@"TASK-ID,RUNTIME(?:\n|\r|\r\n)(?:\s*(\d+),\d+(?:\n|\r|\r\n)?)+");
+            Match match = GetRegexMatch(fileContent, runtimeRx);
+
+            if (!match.Success) {
+                return ConfigErrors["Runtimes"];
+            } else {
+                List<string> taskIds = new List<string>();
+
+                // check if task ids are repeating
+                for (int captureGroupIndex = 1; captureGroupIndex < match.Groups.Count; captureGroupIndex++) {
+                    foreach (Capture capture in match.Groups[captureGroupIndex].Captures) {
+                        taskIds.Add(capture.Value);
+                    }
+                }
+                
+                // task ids are not unique
+                if (taskIds.Distinct().Count() != taskIds.Count) {
+                    return ConfigErrors["RuntimesIds"];
+                }
+                return "";
+            }
+
+        }
+
     }
 }

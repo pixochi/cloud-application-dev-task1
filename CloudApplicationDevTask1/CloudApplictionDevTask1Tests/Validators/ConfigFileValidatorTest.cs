@@ -49,5 +49,41 @@ namespace CloudApplictionDevTask1Tests
             string errorMsg = ConfigFileValidator.ContainsParallelSection(ConfigFileDummies.InvalidParallelSection());
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["ParallelSection"], errorMsg);
         }
+
+        [TestMethod]
+        public void ContainsValidFrequency()
+        {
+            string errorMsg = ConfigFileValidator.ContainsFrequency(ConfigFileDummies.ValidFrequency());
+            Assert.AreEqual("", errorMsg);
+        }
+
+        [TestMethod]
+        public void ContainsInvalidFrequency()
+        {
+            string errorMsg = ConfigFileValidator.ContainsFrequency(ConfigFileDummies.InvalidFrequency());
+            Assert.AreEqual(ConfigFileValidator.ConfigErrors["Frequency"], errorMsg);
+        }
+
+        [TestMethod]
+        public void ContainsValidRuntimes()
+        {
+            string errorMsg = ConfigFileValidator.ContainsRuntimes(ConfigFileDummies.ValidRuntimes());
+            Assert.AreEqual("", errorMsg);
+        }
+
+        [TestMethod]
+        public void ContainsInvalidRuntimes()
+        {
+            string errorMsg = ConfigFileValidator.ContainsRuntimes(ConfigFileDummies.InvalidRuntimes());
+            Assert.AreEqual(ConfigFileValidator.ConfigErrors["Runtimes"], errorMsg);
+        }
+
+
+        [TestMethod]
+        public void ContainsInvalidRuntimesIds()
+        {
+            string errorMsg = ConfigFileValidator.ContainsRuntimes(ConfigFileDummies.InvalidRuntimesIds());
+            Assert.AreEqual(ConfigFileValidator.ConfigErrors["RuntimesIds"], errorMsg);
+        }
     }
 }
