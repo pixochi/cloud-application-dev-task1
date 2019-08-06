@@ -112,5 +112,35 @@ namespace CloudApplictionDevTask1Tests.Dummies
                 5,9
             ";
         }
+
+        public static string ValidProcessorFrequencies()
+        {
+            return @"   
+                // Processor IDs and their frequency values.
+                PROCESSOR-ID,FREQUENCY
+                1,1.7
+                2,2.3
+                3,2.9
+            ";
+        }
+
+        public static string InvalidProcessorFrequencies()
+        {
+            return @"   
+                // Processor IDs and their frequency values.
+                2,2.9
+            ";
+        }
+
+        public static string InvalidProcessorFrequenciesIds()
+        {
+            return @"   
+                // Processor with id 1 is used more than once
+                PROCESSOR-ID,FREQUENCY
+                1,1.7
+                2,2.3
+                1,2.9
+            ";
+        }
     }
 }

@@ -85,5 +85,28 @@ namespace CloudApplictionDevTask1Tests
             string errorMsg = ConfigFileValidator.ContainsRuntimes(ConfigFileDummies.InvalidRuntimesIds());
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["RuntimesIds"], errorMsg);
         }
+
+        [TestMethod]
+        public void ContainsValidProcessorFrequencies()
+        {
+            string errorMsg = ConfigFileValidator.ContainsProcessorFrequencies(ConfigFileDummies.ValidProcessorFrequencies());
+            Assert.AreEqual("", errorMsg);
+        }
+
+
+        [TestMethod]
+        public void ContainsInvalidProcessorFrequencies()
+        {
+            string errorMsg = ConfigFileValidator.ContainsProcessorFrequencies(ConfigFileDummies.InvalidProcessorFrequencies());
+            Assert.AreEqual(ConfigFileValidator.ConfigErrors["ProcessorFrequencies"], errorMsg);
+        }
+
+
+        [TestMethod]
+        public void ContainsInvalidProcessorFrequenciesIds()
+        {
+            string errorMsg = ConfigFileValidator.ContainsProcessorFrequencies(ConfigFileDummies.InvalidProcessorFrequenciesIds());
+            Assert.AreEqual(ConfigFileValidator.ConfigErrors["ProcessorFrequenciesIds"], errorMsg);
+        }
     }
 }

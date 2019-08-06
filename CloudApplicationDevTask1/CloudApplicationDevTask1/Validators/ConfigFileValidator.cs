@@ -15,7 +15,9 @@ namespace CloudApplicationDevTask1.validators
             {"ParallelSection", "The config file contains an invalid section containing data related to the parallel program."},
             {"Frequency", "The config file contains an invalid frequency of a reference processor"},
             {"Runtimes", "The config file contains an invalid section containing tasks runtimes." },
-            {"RuntimesIds", "The config file contains repeating task ids"}
+            {"RuntimesIds", "The config file contains repeating task ids"},
+            {"ProcessorFrequencies", "The config file contains an invalid section with processor frequencies"},
+            {"ProcessorFrequenciesIds", "The config file contains repeating processor ids"}
         };
 
         public static string ContainsLogFilePath(string fileContent)
@@ -59,7 +61,8 @@ namespace CloudApplicationDevTask1.validators
 
             if (!match.Success) {
                 return ConfigErrors["Runtimes"];
-            } else {
+            }
+            else {
                 List<string> taskIds = new List<string>();
 
                 // check if task ids are repeating
@@ -68,14 +71,39 @@ namespace CloudApplicationDevTask1.validators
                         taskIds.Add(capture.Value);
                     }
                 }
-                
+
                 // task ids are not unique
                 if (taskIds.Distinct().Count() != taskIds.Count) {
                     return ConfigErrors["RuntimesIds"];
                 }
                 return "";
             }
+        }
 
+        public static string ContainsProcessorFrequencies(string fileContent)
+        {
+            Regex runtimeRx = new Regex(@"PROCESSOR-ID,FREQUENCY(?:\n|\r|\r\n)(?:\s*(\d+),\d+\.\d+(?:\n|\r|\r\n)?)+");
+            Match match = GetRegexMatch(fileContent, runtimeRx);
+
+            if (!match.Success) {
+                return ConfigErrors["ProcessorFrequencies"];
+            }
+            else {
+                List<string> processorIds = new List<string>();
+
+                // check if processor ids are repeating
+                for (int captureGroupIndex = 1; captureGroupIndex < match.Groups.Count; captureGroupIndex++) {
+                    foreach (Capture capture in match.Groups[captureGroupIndex].Captures) {
+                        processorIds.Add(capture.Value);
+                    }
+                }
+
+                // processor ids are not unique
+                if (processorIds.Distinct().Count() != processorIds.Count) {
+                    return ConfigErrors["ProcessorFrequenciesIds"];
+                }
+                return "";
+            }
         }
 
     }
