@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CloudApplicationDevTask1
 {
-    class FileService
+    public class FileService
     {
         // Inspired by:
         // https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-read-text-from-a-file

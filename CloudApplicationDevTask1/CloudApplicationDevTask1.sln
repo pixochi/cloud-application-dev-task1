@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudApplicationDevTask1", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudApplicationDevTask1Tests", "CloudApplictionDevTask1Tests\CloudApplicationDevTask1Tests.csproj", "{AF5CBF91-94E5-4037-973B-D5FA5B442654}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1GUI", "Task1GUI\Task1GUI.csproj", "{930AB2E1-0203-4F46-A633-185F9D84CE22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{AF5CBF91-94E5-4037-973B-D5FA5B442654}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF5CBF91-94E5-4037-973B-D5FA5B442654}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF5CBF91-94E5-4037-973B-D5FA5B442654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{930AB2E1-0203-4F46-A633-185F9D84CE22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{930AB2E1-0203-4F46-A633-185F9D84CE22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{930AB2E1-0203-4F46-A633-185F9D84CE22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{930AB2E1-0203-4F46-A633-185F9D84CE22}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
