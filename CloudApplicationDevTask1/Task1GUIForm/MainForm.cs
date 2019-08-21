@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CloudApplicationDevTask1;
+using CloudApplicationDevTask1.validators;
+using System.IO;
 
 namespace Task1GUIForm
 {
@@ -41,7 +43,16 @@ namespace Task1GUIForm
             string fileName = openFileDialog1.FileName;
 
             string fileContent = FileService.ReadFile(fileName);
-            errorsForm.AppendError(fileContent);
+
+            string configFilename = TaskAllocationFileValidator.GetConfigFilename(fileContent);
+            string path = Path.GetDirectoryName(fileName);
+            string configFilePath = path + @"\" + configFilename;
+            string configFileContent = FileService.ReadFile(configFilePath);
+
+            if (errorsForm == null) {
+                errorsForm = new ErrorsForm();
+            }
+            errorsForm.AppendError(configFileContent);
         }
     }
 }

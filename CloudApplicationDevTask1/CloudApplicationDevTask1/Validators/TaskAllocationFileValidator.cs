@@ -35,6 +35,19 @@ namespace CloudApplicationDevTask1
             }
         }
 
+        public static string GetConfigFilename(string fileContent)
+        {
+            Regex rx = new Regex(@"CONFIGURATION,""(.*\.csv)""");
+            Match match = GetRegexMatch(fileContent, rx);
+
+            if (!match.Success) {
+                return "";
+            }
+            else {
+                return match.Groups[1].Captures[0].Value;
+            }
+        }
+
         // There will be a line containing the number of program tasks.
         // It commences with the keyword TASKS, followed by a comma,
         // and ends with a number.
