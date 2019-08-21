@@ -106,5 +106,30 @@ namespace CloudApplicationDevTask1.validators
             }
         }
 
+        public static float GetEnergyConsumed(string fileContent)
+        {
+            Regex coefficientsRx = new Regex(@"COEFFICIENT-ID,VALUE(?:\n|\r|\r\n)(?:\s*\d+,(-?\d+\.?\d+)(?:\n|\r|\r\n)?)+");
+            Match match = GetRegexMatch(fileContent, coefficientsRx);
+            Console.WriteLine(match);
+            if (!match.Success) {
+                return -1;
+            }
+            else {
+                List<string> coefficients = new List<string>();
+                Console.WriteLine(match);
+      
+                // get the coefficients as List
+                for (int captureGroupIndex = 1; captureGroupIndex < match.Groups.Count; captureGroupIndex++) {
+                    foreach (Capture capture in match.Groups[captureGroupIndex].Captures) {
+                        coefficients.Add(capture.Value);
+                    }
+                }
+
+                Console.WriteLine(coefficients);
+                return 0;
+            }
+        }
+       
+
     }
 }

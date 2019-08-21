@@ -108,5 +108,37 @@ namespace CloudApplictionDevTask1Tests
             string errorMsg = ConfigFileValidator.ContainsProcessorFrequencies(ConfigFileDummies.InvalidProcessorFrequenciesIds());
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["ProcessorFrequenciesIds"], errorMsg);
         }
+
+        [TestMethod]
+        public void ContainsInValidCoefficients()
+        {
+            string fileContent = @"
+                // Quadratic coefficient IDs and their values.
+                MISSING HEADER LINE
+                0,25
+                1,-25
+                2,10
+            ";
+
+            float energyConsumed = ConfigFileValidator.GetEnergyConsumed(fileContent);
+
+            Assert.AreEqual(-1, energyConsumed);
+        }
+
+        [TestMethod]
+        public void CalculatesEnergyConsumedCorrectly()
+        {
+            string fileContent = @"
+                // Quadratic coefficient IDs and their values.
+                COEFFICIENT-ID,VALUE
+                0,25
+                1,-25
+                2,10
+            ";
+
+            float energyConsumed = ConfigFileValidator.GetEnergyConsumed(fileContent);
+
+            Assert.AreEqual(-1, energyConsumed);
+        }
     }
 }
