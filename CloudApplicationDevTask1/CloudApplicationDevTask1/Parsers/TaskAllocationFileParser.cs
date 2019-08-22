@@ -26,7 +26,7 @@ namespace CloudApplicationDevTask1.Parsers
         public static Dictionary<string, List<List<bool>>> GetAllocations(string fileContent)
         {
             var allocations = new Dictionary<string, List<List<bool>>>();
-            Regex allocationsRx = new Regex($@"ALLOCATION - ID,\d+(?:{FileParser.NewLineRx})(?:\s*((?:(?:0|1),?)+)(?:{FileParser.NewLineRx})?)+");
+            Regex allocationsRx = new Regex($@"ALLOCATION-ID,\d+(?:{FileParser.NewLineRx})(?:\s*((?:(?:0|1),?)+)(?:{FileParser.NewLineRx})?)+");
             MatchCollection allocationMatches = allocationsRx.Matches(fileContent);
             Console.WriteLine(allocationMatches);
             

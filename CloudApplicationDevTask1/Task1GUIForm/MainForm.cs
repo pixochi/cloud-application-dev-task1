@@ -50,8 +50,19 @@ namespace Task1GUIForm
             string configFileContent = FileService.ReadFile(configFilePath);
 
             initFileValidation();
-            validateTANFile(TANfileContent);
-            validateConfigFile(configFileContent);
+            bool isTANFileValid = validateTANFile(TANfileContent);
+            bool isConfigFileValid = validateConfigFile(configFileContent);
+
+            if (isTANFileValid && isConfigFileValid)
+            {
+                var allocations = TaskAllocationFileParser.GetAllocations(TANfileContent);
+                Console.WriteLine(allocations);
+                foreach (var allocation in allocations) {
+                    float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation.Value);
+                    mainFormLabel.Text += $"Allocation {allocation.Key}\n";
+                    mainFormLabel.Text += $"Energy = {energyConsumed}\n\n";
+                }
+            }
         }
 
         private void initFileValidation()
@@ -60,16 +71,18 @@ namespace Task1GUIForm
                 errorsForm = new ErrorsForm();
             }
 
+            mainFormLabel.Text = "";
             errorsForm.ClearErrors();
         }
 
-        private void validateTANFile(string TANfileContent)
+        private bool validateTANFile(string TANfileContent)
         {
             List<string> TANErrors = TaskAllocationFileValidator.ValidateAll(TANfileContent);
 
             if (TANErrors.Count == 0)
             {
                 mainFormLabel.Text += "TAN file is valid.\n";
+                return true;
             }
             else 
             {
@@ -78,16 +91,18 @@ namespace Task1GUIForm
                 {
                     errorsForm.AppendError(errorMsg);
                 }
+                return false;
             }
         }
 
-        private void validateConfigFile(string configFileContent)
+        private bool validateConfigFile(string configFileContent)
         {
             List<string> configErrors = ConfigFileValidator.ValidateAll(configFileContent);
 
             if (configErrors.Count == 0)
             {
                 mainFormLabel.Text += "Configuration file is valid.\n\n";
+                return true;
             }
             else
             {
@@ -95,6 +110,7 @@ namespace Task1GUIForm
                 foreach (var errorMsg in configErrors) {
                     errorsForm.AppendError(errorMsg);
                 }
+                return false;
             }
         }
 
