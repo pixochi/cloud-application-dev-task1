@@ -113,21 +113,46 @@ namespace CloudApplicationDevTask1.validators
             }
         }
 
-        public static float GetEnergyConsumed(string TANFileContent, string configFileContent)
+        public static float GetTotalEnergyConsumed(string configFileContent, List<List<bool>> allocation)
         {
             List<float> coefficients = ConfigFileParser.GetCoefficients(configFileContent);
             List<float> processorFrequencies = ConfigFileParser.GetProcessorFrequencies(configFileContent);
             List<float> taskRuntimes = ConfigFileParser.GetTaskRuntimes(configFileContent);
             float runtimeReferenceFrequency = ConfigFileParser.GetRuntimeReferenceFrequency(configFileContent);
-            var allocations = TaskAllocationFileParser.GetAllocations(TANFileContent);
+            float totalEnergyConsumed = 0;
 
-            if (coefficients.Count == 0 || processorFrequencies.Count == 0 || taskRuntimes.Count == 0 || allocations.Count == 0) {
+            if (coefficients.Count == 0 || processorFrequencies.Count == 0 || taskRuntimes.Count == 0 || allocation.Count == 0 || runtimeReferenceFrequency == -1) {
                 return -1;
             }
-            else {
-                Console.WriteLine(coefficients);
-                return 0;
+            else
+            {
+                // Calculate energy consumed by each task
+                for (int taskId = 0; taskId < taskRuntimes.Count; taskId++)
+                {
+                    int processorId = 0;
+                    
+                    // find the processor that handles a given task
+                    for (int allocationProcessorId = 0; allocationProcessorId < allocation.Count; allocationProcessorId++)
+                    {
+                        if (allocation[allocationProcessorId][taskId])
+                        {
+                            processorId = allocationProcessorId;
+                        }
+                    }
+
+                    float energyConsumedPerTask = GetEnergyConsumedPerTask(coefficients, processorFrequencies[processorId], taskRuntimes[taskId]);
+                    totalEnergyConsumed += energyConsumedPerTask;
+                }
+
+                Console.WriteLine(totalEnergyConsumed);
+
+                return totalEnergyConsumed;
             }
+        }
+
+        public static float GetEnergyConsumedPerTask(List<float> coefficients, float frequency, float runtime)
+        {
+            return (coefficients[2] * frequency * frequency + coefficients[1] * frequency + coefficients[0]) * runtime;
         }
 
         public static List<string> ValidateAll(string fileContent)
@@ -143,6 +168,12 @@ namespace CloudApplicationDevTask1.validators
             }
 
             return errorsList;
+        }
+
+        private static float GetRuntimePerFrequency(float referenceFrequency, float runtime, float frequency)
+        {
+            float runtimePerUnit = referenceFrequency / runtime;
+            return runtimePerUnit / frequency;
         }
 
     }

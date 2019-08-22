@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CloudApplicationDevTask1.validators;
 using CloudApplictionDevTask1Tests.Dummies;
+using System.Collections.Generic;
 
 namespace CloudApplictionDevTask1Tests
 {
@@ -120,20 +121,13 @@ namespace CloudApplictionDevTask1Tests
                 2,10
             ";
 
-            string TANFileContent = @"
-                // The number of allocations in this file.
-                ALLOCATIONS,1
+            List<List<bool>> allocation = new List<List<bool>>();
+            List<bool> processor1 = new List<bool>() {
+                true, true, false, false, false
+            };
+            allocation.Add(processor1);
 
-                // The set of allocations.
-                // The ith row is the allocation of tasks to the ith processor.
-                // The jth column is the allocation of the jth task to a processor.
-                ALLOCATION - ID,1
-                1,1,0,0,0
-                0,0,1,1,0
-                0,0,0,0,1
-            ";
-
-            float energyConsumed = ConfigFileValidator.GetEnergyConsumed(TANFileContent, configFileContent);
+            float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation);
 
             Assert.AreEqual(-1, energyConsumed);
         }
@@ -167,39 +161,24 @@ namespace CloudApplictionDevTask1Tests
                 2,10
             ";
 
-            string TANFileContent = @"
-                // The name of the configuration file.
-                CONFIGURATION,""Test1.csv""
+            List<List<bool>> allocation = new List<List<bool>>();
+            List<bool> processor1 = new List<bool>() {
+                true, true, false, false, false
+            };
+            List<bool> processor2 = new List<bool>() {
+                false, false, true, true, false
+            };
+            List<bool> processor3 = new List<bool>() {
+                false, false, false, false, true
+            };
 
-                // The number of tasks and processors per allocation.
-                TASKS,5
-                PROCESSORS,3
+            allocation.Add(processor1);
+            allocation.Add(processor2);
+            allocation.Add(processor3);
 
-                // The number of allocations in this file.
-                ALLOCATIONS,3
+            float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation);
 
-                // The set of allocations.
-                // The ith row is the allocation of tasks to the ith processor.
-                // The jth column is the allocation of the jth task to a processor.
-                ALLOCATION - ID,1
-                1,1,0,0,0
-                0,0,1,1,0
-                0,0,0,0,1
-
-                ALLOCATION - ID,2
-                1,1,0,0,0
-                0,0,0,0,1
-                0,0,1,1,0
-
-                ALLOCATION - ID,3
-                1,0,0,1,0
-                0,1,1,0,0
-                0,0,0,0,1
-            ";
-
-            float energyConsumed = ConfigFileValidator.GetEnergyConsumed(TANFileContent, configFileContent);
-
-            Assert.AreEqual(-1, energyConsumed);
+            Assert.AreEqual(193.8, Math.Round(energyConsumed, 2));
         }
     }
 }
