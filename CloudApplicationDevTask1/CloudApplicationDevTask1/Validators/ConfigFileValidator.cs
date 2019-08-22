@@ -206,11 +206,7 @@ namespace CloudApplicationDevTask1.validators
                     {
                         if (allocation[processorId][taskId])
                         {
-                            Console.WriteLine("Is it really true?");
                             processorRuntime += GetTaskRuntime(runtimeReferenceFrequency, taskRuntimes[taskId], processorFrequencies[processorId]);
-                        }
-                        else {
-                            Console.WriteLine("FUCK IT");
                         }
                     }
 
