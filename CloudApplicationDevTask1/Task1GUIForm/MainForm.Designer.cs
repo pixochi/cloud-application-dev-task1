@@ -38,6 +38,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.mainFormLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,14 +68,14 @@
             // openTANFileToolStripMenuItem
             // 
             this.openTANFileToolStripMenuItem.Name = "openTANFileToolStripMenuItem";
-            this.openTANFileToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.openTANFileToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
             this.openTANFileToolStripMenuItem.Text = "Open TAN File";
             this.openTANFileToolStripMenuItem.Click += new System.EventHandler(this.openTANFileToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // validateToolStripMenuItem
@@ -88,7 +89,7 @@
             // allocationsToolStripMenuItem
             // 
             this.allocationsToolStripMenuItem.Name = "allocationsToolStripMenuItem";
-            this.allocationsToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.allocationsToolStripMenuItem.Size = new System.Drawing.Size(158, 26);
             this.allocationsToolStripMenuItem.Text = "Allocations";
             // 
             // viewToolStripMenuItem
@@ -102,7 +103,7 @@
             // errorListToolStripMenuItem
             // 
             this.errorListToolStripMenuItem.Name = "errorListToolStripMenuItem";
-            this.errorListToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.errorListToolStripMenuItem.Size = new System.Drawing.Size(142, 26);
             this.errorListToolStripMenuItem.Text = "Error List";
             this.errorListToolStripMenuItem.Click += new System.EventHandler(this.errorListToolStripMenuItem_Click);
             // 
@@ -117,7 +118,7 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(125, 26);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -125,15 +126,28 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
+            // mainFormLabel
+            // 
+            this.mainFormLabel.BackColor = System.Drawing.SystemColors.Info;
+            this.mainFormLabel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainFormLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.mainFormLabel.Location = new System.Drawing.Point(0, 28);
+            this.mainFormLabel.Name = "mainFormLabel";
+            this.mainFormLabel.Padding = new System.Windows.Forms.Padding(16);
+            this.mainFormLabel.Size = new System.Drawing.Size(596, 292);
+            this.mainFormLabel.TabIndex = 1;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 320);
+            this.Controls.Add(this.mainFormLabel);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "MainForm";
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -154,5 +168,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Label mainFormLabel;
     }
 }

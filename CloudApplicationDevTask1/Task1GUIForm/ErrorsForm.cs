@@ -32,5 +32,10 @@ namespace Task1GUIForm
         {
             this.errorsLabel.Text += "\n" + error;
         }
+
+        public void ClearErrors()
+        {
+            this.errorsLabel.Text = "";
+        }
     }
 }

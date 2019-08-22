@@ -40,19 +40,65 @@ namespace Task1GUIForm
         private void openTANFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
-            string fileName = openFileDialog1.FileName;
+            string TANfileName = openFileDialog1.FileName;
+            string TANfileContent = FileService.ReadFile(TANfileName);
 
-            string fileContent = FileService.ReadFile(fileName);
-
-            string configFilename = TaskAllocationFileValidator.GetConfigFilename(fileContent);
-            string path = Path.GetDirectoryName(fileName);
+            string configFilename = TaskAllocationFileValidator.GetConfigFilename(TANfileContent);
+            string path = Path.GetDirectoryName(TANfileName);
             string configFilePath = path + @"\" + configFilename;
             string configFileContent = FileService.ReadFile(configFilePath);
 
+            initFileValidation();
+            validateTANFile(TANfileContent);
+            validateConfigFile(configFileContent);
+        }
+
+        private void initFileValidation()
+        {
             if (errorsForm == null) {
                 errorsForm = new ErrorsForm();
             }
-            errorsForm.AppendError(configFileContent);
+
+            errorsForm.ClearErrors();
+        }
+
+        private void validateTANFile(string TANfileContent)
+        {
+            List<string> TANErrors = TaskAllocationFileValidator.ValidateAll(TANfileContent);
+
+            if (TANErrors.Count == 0)
+            {
+                mainFormLabel.Text += "TAN file is valid.\n";
+            } else 
+            {
+                mainFormLabel.Text += "TAN file is invalid.\n";
+                foreach (var errorMsg in TANErrors)
+                {
+                    errorsForm.AppendError(errorMsg);
+                }
+            }
+        }
+
+        private void validateConfigFile(string configFileContent)
+        {
+            List<string> configErrors = ConfigFileValidator.ValidateAll(configFileContent);
+
+            if (configErrors.Count == 0)
+            {
+                mainFormLabel.Text += "Configuration file is valid.\n\n";
+            }
+            else
+            {
+                mainFormLabel.Text += "Configuration file is invalid.\n\n";
+                foreach (var errorMsg in configErrors) {
+                    errorsForm.AppendError(errorMsg);
+                }
+            }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

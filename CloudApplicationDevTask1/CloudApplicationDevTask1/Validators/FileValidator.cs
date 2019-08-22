@@ -4,8 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace CloudApplicationDevTask1
 {
-    // TODO: check not only necessary info, but everything that shouldn't be in the file???
-    // Rules in the assignment: 1, 2, 3
+    // TODO: add a comment for each class and method
     public class FileValidator
     {
         // Mixing data and a comment on one line is not allowed

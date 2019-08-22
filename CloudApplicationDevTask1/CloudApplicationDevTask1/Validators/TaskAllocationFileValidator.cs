@@ -8,6 +8,15 @@ namespace CloudApplicationDevTask1
 
     public class TaskAllocationFileValidator: FileValidator 
     {
+        delegate string ValidationFunction(string fileContent);
+        private static List<ValidationFunction> validationMethods = new List<ValidationFunction>() {
+               DataMixedWithComments,
+               ContainsValidConfigPath,
+               ContainsValidTasksLine,
+               ContainsValidProcessorsLine,
+               ContainsValidAllocationsLine,
+        };
+  
         public static Dictionary<string, string> AllocationErrors = new Dictionary<string, string>(){
             {"WrongAllocationCount", "The number of allocations is not correct" },
             {"InvalidTaskAllocation", "Tasks are incorrectly assigned to processors" }
@@ -159,5 +168,20 @@ namespace CloudApplicationDevTask1
 
             return errorMsg;
         }
+
+        public static List<string> ValidateAll(string fileContent) {
+            List<string> errorsList = new List<string>();
+
+            foreach (var taskAllocationFileValidator in validationMethods) {
+                string errorMsg = taskAllocationFileValidator(fileContent);
+
+                if (errorMsg != "") {
+                    errorsList.Add(errorMsg);
+                }
+            }
+
+            return errorsList;
+        }
+
     }
 }

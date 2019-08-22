@@ -9,6 +9,17 @@ namespace CloudApplicationDevTask1.validators
 {
     public class ConfigFileValidator: FileValidator
     {
+        delegate string ValidationFunction(string fileContent);
+        private static List<ValidationFunction> validationMethods = new List<ValidationFunction>() {
+               DataMixedWithComments,
+               ContainsLogFilePath,
+               ContainsLimitSection,
+               ContainsParallelSection,
+               ContainsFrequency,
+               ContainsRuntimes,
+               ContainsProcessorFrequencies,
+        };
+   
         public static Dictionary<string, string> ConfigErrors = new Dictionary<string, string>(){
             {"LogFilePath", "The config file contains an invalid path to a log file."},
             {"LimitSection", "The config file contains an invalid section of minimum and maximum limits for the number of tasks, the number of processors, and the processor frequencies."},
@@ -129,7 +140,21 @@ namespace CloudApplicationDevTask1.validators
                 return 0;
             }
         }
-       
+
+        public static List<string> ValidateAll(string fileContent)
+        {
+            List<string> errorsList = new List<string>();
+
+            foreach (var taskAllocationFileValidator in validationMethods) {
+                string errorMsg = taskAllocationFileValidator(fileContent);
+
+                if (errorMsg != "") {
+                    errorsList.Add(errorMsg);
+                }
+            }
+
+            return errorsList;
+        }
 
     }
 }
