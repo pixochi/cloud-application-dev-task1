@@ -36,5 +36,6 @@ namespace CloudApplicationDevTask1.Parsers
 
             return captureValues;
         }
+
     }
 }

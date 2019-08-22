@@ -115,9 +115,10 @@ namespace CloudApplicationDevTask1.validators
 
         public static float GetEnergyConsumed(string fileContent)
         {
-            List<string> coefficients = ConfigFileParser.GetCoefficients(fileContent);
+            List<float> coefficients = ConfigFileParser.GetCoefficients(fileContent);
             List<float> processorFrequencies = ConfigFileParser.GetProcessorFrequencies(fileContent);
             List<float> taskRuntimes = ConfigFileParser.GetTaskRuntimes(fileContent);
+            float runtimeReferenceFrequency = ConfigFileParser.GetRuntimeReferenceFrequency(fileContent);
 
             if (coefficients.Count == 0 || processorFrequencies.Count == 0 || taskRuntimes.Count == 0) {
                 return -1;

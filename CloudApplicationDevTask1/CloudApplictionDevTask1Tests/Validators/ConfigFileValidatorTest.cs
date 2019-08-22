@@ -129,6 +129,24 @@ namespace CloudApplictionDevTask1Tests
         public void CalculatesEnergyConsumedCorrectly()
         {
             string fileContent = @"
+                // Task runtimes are based on tasks executing on
+                // a processor running at the following frequency (GHz).
+                RUNTIME-REFERENCE-FREQUENCY,2
+
+                // Task IDs and their runtime values.
+                TASK-ID,RUNTIME
+                1,1
+                2,1
+                3,2
+                4,1
+                5,3
+
+                // Processor IDs and their frequency values.
+                PROCESSOR-ID,FREQUENCY
+                1,1.7
+                2,2.3
+                3,2.9
+
                 // Quadratic coefficient IDs and their values.
                 COEFFICIENT-ID,VALUE
                 0,25

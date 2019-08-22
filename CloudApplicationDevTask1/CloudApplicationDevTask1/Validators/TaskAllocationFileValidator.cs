@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CloudApplicationDevTask1.Parsers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -47,7 +48,7 @@ namespace CloudApplicationDevTask1
         public static string GetConfigFilename(string fileContent)
         {
             Regex rx = new Regex(@"CONFIGURATION,""(.*\.csv)""");
-            Match match = GetRegexMatch(fileContent, rx);
+            Match match = FileParser.GetRegexMatch(fileContent, rx);
 
             if (!match.Success) {
                 return "";
