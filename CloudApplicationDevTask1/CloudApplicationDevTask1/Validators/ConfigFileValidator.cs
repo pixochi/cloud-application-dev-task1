@@ -113,14 +113,15 @@ namespace CloudApplicationDevTask1.validators
             }
         }
 
-        public static float GetEnergyConsumed(string fileContent)
+        public static float GetEnergyConsumed(string TANFileContent, string configFileContent)
         {
-            List<float> coefficients = ConfigFileParser.GetCoefficients(fileContent);
-            List<float> processorFrequencies = ConfigFileParser.GetProcessorFrequencies(fileContent);
-            List<float> taskRuntimes = ConfigFileParser.GetTaskRuntimes(fileContent);
-            float runtimeReferenceFrequency = ConfigFileParser.GetRuntimeReferenceFrequency(fileContent);
+            List<float> coefficients = ConfigFileParser.GetCoefficients(configFileContent);
+            List<float> processorFrequencies = ConfigFileParser.GetProcessorFrequencies(configFileContent);
+            List<float> taskRuntimes = ConfigFileParser.GetTaskRuntimes(configFileContent);
+            float runtimeReferenceFrequency = ConfigFileParser.GetRuntimeReferenceFrequency(configFileContent);
+            var allocations = TaskAllocationFileParser.GetAllocations(TANFileContent);
 
-            if (coefficients.Count == 0 || processorFrequencies.Count == 0 || taskRuntimes.Count == 0) {
+            if (coefficients.Count == 0 || processorFrequencies.Count == 0 || taskRuntimes.Count == 0 || allocations.Count == 0) {
                 return -1;
             }
             else {

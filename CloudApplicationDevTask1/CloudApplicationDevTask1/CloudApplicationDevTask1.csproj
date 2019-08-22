@@ -55,6 +55,7 @@
     <Compile Include="Converters\ListConverter.cs" />
     <Compile Include="Parsers\ConfigFileParser.cs" />
     <Compile Include="Parsers\FileParser.cs" />
+    <Compile Include="Parsers\TaskAllocationFileParser.cs" />
     <Compile Include="Validators\ConfigFileValidator.cs" />
     <Compile Include="Validators\FileValidator.cs" />
     <Compile Include="Services\FileService.cs" />

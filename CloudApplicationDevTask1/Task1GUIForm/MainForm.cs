@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CloudApplicationDevTask1;
 using CloudApplicationDevTask1.validators;
 using System.IO;
+using CloudApplicationDevTask1.Parsers;
 
 namespace Task1GUIForm
 {
@@ -43,7 +44,7 @@ namespace Task1GUIForm
             string TANfileName = openFileDialog1.FileName;
             string TANfileContent = FileService.ReadFile(TANfileName);
 
-            string configFilename = TaskAllocationFileValidator.GetConfigFilename(TANfileContent);
+            string configFilename = TaskAllocationFileParser.GetConfigFilename(TANfileContent);
             string path = Path.GetDirectoryName(TANfileName);
             string configFilePath = path + @"\" + configFilename;
             string configFileContent = FileService.ReadFile(configFilePath);

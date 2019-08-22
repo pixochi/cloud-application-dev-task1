@@ -112,7 +112,7 @@ namespace CloudApplictionDevTask1Tests
         [TestMethod]
         public void ContainsInValidCoefficients()
         {
-            string fileContent = @"
+            string configFileContent = @"
                 // Quadratic coefficient IDs and their values.
                 MISSING HEADER LINE
                 0,25
@@ -120,7 +120,20 @@ namespace CloudApplictionDevTask1Tests
                 2,10
             ";
 
-            float energyConsumed = ConfigFileValidator.GetEnergyConsumed(fileContent);
+            string TANFileContent = @"
+                // The number of allocations in this file.
+                ALLOCATIONS,1
+
+                // The set of allocations.
+                // The ith row is the allocation of tasks to the ith processor.
+                // The jth column is the allocation of the jth task to a processor.
+                ALLOCATION - ID,1
+                1,1,0,0,0
+                0,0,1,1,0
+                0,0,0,0,1
+            ";
+
+            float energyConsumed = ConfigFileValidator.GetEnergyConsumed(TANFileContent, configFileContent);
 
             Assert.AreEqual(-1, energyConsumed);
         }
@@ -128,7 +141,7 @@ namespace CloudApplictionDevTask1Tests
         [TestMethod]
         public void CalculatesEnergyConsumedCorrectly()
         {
-            string fileContent = @"
+            string configFileContent = @"
                 // Task runtimes are based on tasks executing on
                 // a processor running at the following frequency (GHz).
                 RUNTIME-REFERENCE-FREQUENCY,2
@@ -154,7 +167,37 @@ namespace CloudApplictionDevTask1Tests
                 2,10
             ";
 
-            float energyConsumed = ConfigFileValidator.GetEnergyConsumed(fileContent);
+            string TANFileContent = @"
+                // The name of the configuration file.
+                CONFIGURATION,""Test1.csv""
+
+                // The number of tasks and processors per allocation.
+                TASKS,5
+                PROCESSORS,3
+
+                // The number of allocations in this file.
+                ALLOCATIONS,3
+
+                // The set of allocations.
+                // The ith row is the allocation of tasks to the ith processor.
+                // The jth column is the allocation of the jth task to a processor.
+                ALLOCATION - ID,1
+                1,1,0,0,0
+                0,0,1,1,0
+                0,0,0,0,1
+
+                ALLOCATION - ID,2
+                1,1,0,0,0
+                0,0,0,0,1
+                0,0,1,1,0
+
+                ALLOCATION - ID,3
+                1,0,0,1,0
+                0,1,1,0,0
+                0,0,0,0,1
+            ";
+
+            float energyConsumed = ConfigFileValidator.GetEnergyConsumed(TANFileContent, configFileContent);
 
             Assert.AreEqual(-1, energyConsumed);
         }

@@ -9,6 +9,9 @@ namespace CloudApplicationDevTask1.Parsers
 {
     public static class FileParser
     {
+
+        public static string NewLineRx = "\n|\r|\r\n";
+
         public static bool ContainsRegex(string fileContent, Regex rx)
         {
             Match match = rx.Match(fileContent);
@@ -23,8 +26,13 @@ namespace CloudApplicationDevTask1.Parsers
 
         public static List<string> GetCaptureValues(string fileContent, Regex rx)
         {
-            List<string> captureValues = new List<string>();
             Match match = GetRegexMatch(fileContent, rx);
+            return GetCaptureValuesFromMatch(match);
+        }
+
+        public static List<string> GetCaptureValuesFromMatch(Match match)
+        {
+            List<string> captureValues = new List<string>();
 
             if (match.Success) {
                 for (int captureGroupIndex = 1; captureGroupIndex < match.Groups.Count; captureGroupIndex++) {
