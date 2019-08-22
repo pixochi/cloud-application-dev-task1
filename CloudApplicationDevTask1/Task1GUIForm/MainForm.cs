@@ -55,13 +55,7 @@ namespace Task1GUIForm
 
             if (isTANFileValid && isConfigFileValid)
             {
-                var allocations = TaskAllocationFileParser.GetAllocations(TANfileContent);
-                Console.WriteLine(allocations);
-                foreach (var allocation in allocations) {
-                    float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation.Value);
-                    mainFormLabel.Text += $"Allocation {allocation.Key}\n";
-                    mainFormLabel.Text += $"Energy = {energyConsumed}\n\n";
-                }
+                displayAllocations(TANfileContent, configFileContent);
             }
         }
 
@@ -71,7 +65,7 @@ namespace Task1GUIForm
                 errorsForm = new ErrorsForm();
             }
 
-            mainFormLabel.Text = "";
+            mainFormTextBox.Text = "";
             errorsForm.ClearErrors();
         }
 
@@ -81,12 +75,12 @@ namespace Task1GUIForm
 
             if (TANErrors.Count == 0)
             {
-                mainFormLabel.Text += "TAN file is valid.\n";
+                mainFormTextBox.AppendText($"TAN file is valid.{Environment.NewLine}");
                 return true;
             }
             else 
             {
-                mainFormLabel.Text += "TAN file is invalid.\n";
+                mainFormTextBox.AppendText($"TAN file is invalid.{Environment.NewLine}");
                 foreach (var errorMsg in TANErrors)
                 {
                     errorsForm.AppendError(errorMsg);
@@ -101,16 +95,46 @@ namespace Task1GUIForm
 
             if (configErrors.Count == 0)
             {
-                mainFormLabel.Text += "Configuration file is valid.\n\n";
+                mainFormTextBox.Text += "Configuration file is valid.";
+                mainFormTextBox.AppendText(Environment.NewLine);
+                mainFormTextBox.AppendText(Environment.NewLine);
                 return true;
             }
             else
             {
-                mainFormLabel.Text += "Configuration file is invalid.\n\n";
+                mainFormTextBox.Text += "Configuration file is invalid.";
+                mainFormTextBox.AppendText(Environment.NewLine);
                 foreach (var errorMsg in configErrors) {
                     errorsForm.AppendError(errorMsg);
                 }
                 return false;
+            }
+        }
+
+        private void displayAllocations(string TANFileContent, string configFileContent)
+        {
+            var allocations = TaskAllocationFileParser.GetAllocations(TANFileContent);
+            foreach (var allocation in allocations) {
+                float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation.Value);
+                mainFormTextBox.AppendText($"Allocation {allocation.Key}{Environment.NewLine}");
+                mainFormTextBox.AppendText($"Energy = {energyConsumed}{Environment.NewLine}");
+
+                foreach (var processor in allocation.Value)
+                {
+                    for (int taskId = 0; taskId < processor.Count; taskId++)
+                    {
+                        mainFormTextBox.Text += processor[taskId] ? "1" : "0";
+
+                        if (taskId != processor.Count - 1)
+                        {
+                            mainFormTextBox.Text += ",";
+                        }
+                    }
+
+                    mainFormTextBox.AppendText(Environment.NewLine);
+                }
+
+                mainFormTextBox.AppendText(Environment.NewLine);
             }
         }
 

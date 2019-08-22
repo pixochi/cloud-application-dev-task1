@@ -38,7 +38,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.mainFormLabel = new System.Windows.Forms.Label();
+            this.mainFormTextBox = new System.Windows.Forms.TextBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,23 +126,25 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // mainFormLabel
+            // mainFormTextBox
             // 
-            this.mainFormLabel.BackColor = System.Drawing.SystemColors.Info;
-            this.mainFormLabel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainFormLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.mainFormLabel.Location = new System.Drawing.Point(0, 28);
-            this.mainFormLabel.Name = "mainFormLabel";
-            this.mainFormLabel.Padding = new System.Windows.Forms.Padding(16);
-            this.mainFormLabel.Size = new System.Drawing.Size(596, 292);
-            this.mainFormLabel.TabIndex = 1;
+            this.mainFormTextBox.Cursor = System.Windows.Forms.Cursors.No;
+            this.mainFormTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainFormTextBox.Location = new System.Drawing.Point(0, 28);
+            this.mainFormTextBox.Margin = new System.Windows.Forms.Padding(8);
+            this.mainFormTextBox.Multiline = true;
+            this.mainFormTextBox.Name = "mainFormTextBox";
+            this.mainFormTextBox.ReadOnly = true;
+            this.mainFormTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.mainFormTextBox.Size = new System.Drawing.Size(596, 292);
+            this.mainFormTextBox.TabIndex = 2;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 320);
-            this.Controls.Add(this.mainFormLabel);
+            this.Controls.Add(this.mainFormTextBox);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
@@ -168,6 +170,6 @@
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Label mainFormLabel;
+        private System.Windows.Forms.TextBox mainFormTextBox;
     }
 }
