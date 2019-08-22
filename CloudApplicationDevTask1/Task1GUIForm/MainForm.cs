@@ -69,7 +69,8 @@ namespace Task1GUIForm
             if (TANErrors.Count == 0)
             {
                 mainFormLabel.Text += "TAN file is valid.\n";
-            } else 
+            }
+            else 
             {
                 mainFormLabel.Text += "TAN file is invalid.\n";
                 foreach (var errorMsg in TANErrors)

@@ -23,17 +23,5 @@ namespace CloudApplicationDevTask1
                 return errorMsg;
             }
         }
-
-        public static bool ContainsRegex(string fileContent, Regex rx)
-        {
-            Match match = rx.Match(fileContent);
-            return match.Success;
-        }
-
-        public static Match GetRegexMatch(string fileContent, Regex rx)
-        {
-            Match match = rx.Match(fileContent);
-            return match;
-        }
     }
 }
