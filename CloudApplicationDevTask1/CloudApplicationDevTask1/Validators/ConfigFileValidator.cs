@@ -140,11 +140,10 @@ namespace CloudApplicationDevTask1.validators
                         }
                     }
 
-                    float energyConsumedPerTask = GetEnergyConsumedPerTask(coefficients, processorFrequencies[processorId], taskRuntimes[taskId]);
+                    float runtimeOnGivenProcessor = GetRuntimePerFrequency(runtimeReferenceFrequency, taskRuntimes[taskId], processorFrequencies[processorId]);
+                    float energyConsumedPerTask = GetEnergyConsumedPerTask(coefficients, processorFrequencies[processorId], runtimeOnGivenProcessor);
                     totalEnergyConsumed += energyConsumedPerTask;
                 }
-
-                Console.WriteLine(totalEnergyConsumed);
 
                 return totalEnergyConsumed;
             }
