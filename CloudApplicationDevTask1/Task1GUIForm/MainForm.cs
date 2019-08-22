@@ -116,8 +116,10 @@ namespace Task1GUIForm
             var allocations = TaskAllocationFileParser.GetAllocations(TANFileContent);
             foreach (var allocation in allocations) {
                 float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation.Value);
+                float allocationRuntime = ConfigFileValidator.GetAllocationRuntime(configFileContent, allocation.Value);
+
                 mainFormTextBox.AppendText($"Allocation {allocation.Key}{Environment.NewLine}");
-                mainFormTextBox.AppendText($"Energy = {energyConsumed}{Environment.NewLine}");
+                mainFormTextBox.AppendText($"Time = {allocationRuntime}, Energy = {energyConsumed}{Environment.NewLine}");
 
                 foreach (var processor in allocation.Value)
                 {

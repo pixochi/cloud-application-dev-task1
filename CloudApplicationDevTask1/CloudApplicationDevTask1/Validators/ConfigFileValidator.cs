@@ -71,21 +71,26 @@ namespace CloudApplicationDevTask1.validators
             Regex runtimesRx = new Regex(@"TASK-ID,RUNTIME(?:\n|\r|\r\n)(?:\s*(\d+),\d+(?:\n|\r|\r\n)?)+");
             Match match = FileParser.GetRegexMatch(fileContent, runtimesRx);
 
-            if (!match.Success) {
+            if (!match.Success)
+            {
                 return ConfigErrors["Runtimes"];
             }
-            else {
+            else 
+            {
                 List<string> taskIds = new List<string>();
 
                 // check if task ids are repeating
-                for (int captureGroupIndex = 1; captureGroupIndex < match.Groups.Count; captureGroupIndex++) {
-                    foreach (Capture capture in match.Groups[captureGroupIndex].Captures) {
+                for (int captureGroupIndex = 1; captureGroupIndex < match.Groups.Count; captureGroupIndex++)
+                {
+                    foreach (Capture capture in match.Groups[captureGroupIndex].Captures)
+                    {
                         taskIds.Add(capture.Value);
                     }
                 }
 
                 // task ids are not unique
-                if (taskIds.Distinct().Count() != taskIds.Count) {
+                if (taskIds.Distinct().Count() != taskIds.Count)
+                {
                     return ConfigErrors["RuntimesIds"];
                 }
                 return "";
@@ -113,6 +118,7 @@ namespace CloudApplicationDevTask1.validators
             }
         }
 
+        // TODO: test
         public static float GetTotalEnergyConsumed(string configFileContent, List<List<bool>> allocation)
         {
             List<float> coefficients = ConfigFileParser.GetCoefficients(configFileContent);
@@ -141,7 +147,7 @@ namespace CloudApplicationDevTask1.validators
                         }
                     }
 
-                    float runtimeOnGivenProcessor = GetRuntimePerFrequency(runtimeReferenceFrequency, taskRuntimes[taskId], processorFrequencies[processorId]);
+                    float runtimeOnGivenProcessor = GetTaskRuntime(runtimeReferenceFrequency, taskRuntimes[taskId], processorFrequencies[processorId]);
                     float energyConsumedPerTask = GetEnergyConsumedPerTask(coefficients, processorFrequencies[processorId], runtimeOnGivenProcessor);
                     totalEnergyConsumed += energyConsumedPerTask;
                 }
@@ -150,6 +156,7 @@ namespace CloudApplicationDevTask1.validators
             }
         }
 
+        // TODO: test
         public static float GetEnergyConsumedPerTask(List<float> coefficients, float frequency, float runtime)
         {
             return (coefficients[2] * frequency * frequency + coefficients[1] * frequency + coefficients[0]) * runtime;
@@ -159,10 +166,12 @@ namespace CloudApplicationDevTask1.validators
         {
             List<string> errorsList = new List<string>();
 
-            foreach (var taskAllocationFileValidator in validationMethods) {
+            foreach (var taskAllocationFileValidator in validationMethods)
+            {
                 string errorMsg = taskAllocationFileValidator(fileContent);
 
-                if (errorMsg != "") {
+                if (errorMsg != "")
+                {
                     errorsList.Add(errorMsg);
                 }
             }
@@ -170,10 +179,49 @@ namespace CloudApplicationDevTask1.validators
             return errorsList;
         }
 
-        private static float GetRuntimePerFrequency(float referenceFrequency, float runtime, float frequency)
+        // TODO: Test
+        public static float GetTaskRuntime(float referenceFrequency, float runtime, float frequency)
         {
-            float runtimePerUnit = referenceFrequency / runtime;
-            return runtimePerUnit / frequency;
+            return runtime * (referenceFrequency / frequency);
+        }
+
+        // TODO: test
+        public static float GetAllocationRuntime(string configFileContent, List<List<bool>> allocation)
+        {
+            List<float> processorFrequencies = ConfigFileParser.GetProcessorFrequencies(configFileContent);
+            List<float> taskRuntimes = ConfigFileParser.GetTaskRuntimes(configFileContent);
+            float runtimeReferenceFrequency = ConfigFileParser.GetRuntimeReferenceFrequency(configFileContent);
+            float allocationRuntime = 0;
+
+            if (processorFrequencies.Count == 0 || taskRuntimes.Count == 0 || allocation.Count == 0 || runtimeReferenceFrequency == -1) {
+                return -1;
+            }
+            else
+            {
+                for (int processorId = 0; processorId < allocation.Count; processorId++)
+                {
+                    float processorRuntime = 0;
+
+                    for (int taskId = 0; taskId < allocation[processorId].Count; taskId++)
+                    {
+                        if (allocation[processorId][taskId])
+                        {
+                            Console.WriteLine("Is it really true?");
+                            processorRuntime += GetTaskRuntime(runtimeReferenceFrequency, taskRuntimes[taskId], processorFrequencies[processorId]);
+                        }
+                        else {
+                            Console.WriteLine("FUCK IT");
+                        }
+                    }
+
+                    if (processorRuntime >= allocationRuntime)
+                    {
+                        allocationRuntime = processorRuntime;
+                    }
+                }
+
+                return allocationRuntime;
+            }
         }
 
     }
