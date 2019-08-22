@@ -12,14 +12,14 @@ namespace CloudApplicationDevTask1.Parsers
     {
         public static List<float> GetCoefficients(string fileContent)
         {
-            Regex coefficientsRx = new Regex(@"COEFFICIENT-ID,VALUE(?:\n|\r|\r\n)(?:\s*\d+,(-?\d+\.?\d+)(?:\n|\r|\r\n)?)+");
+            Regex coefficientsRx = new Regex(@"COEFFICIENT-ID,VALUE(?:\n|\r|\r\n)(?:\s*\d+,(-?\d+(?:\.?\d+)?)(?:\n|\r|\r\n)?)+");
             List<string> coefficients = FileParser.GetCaptureValues(fileContent, coefficientsRx);
             return ListConverter.StringToFloat(coefficients);
         }
 
         public static List<float> GetProcessorFrequencies(string fileContent)
         {
-            Regex frequenciesRx = new Regex(@"PROCESSOR-ID,FREQUENCY(?:\n|\r|\r\n)(?:\s*\d+,(\d+\.?\d+)(?:\n|\r|\r\n)?)+");
+            Regex frequenciesRx = new Regex(@"PROCESSOR-ID,FREQUENCY(?:\n|\r|\r\n)(?:\s*\d+,(\d+(?:\.?\d+)?)(?:\n|\r|\r\n)?)+");
             List<string> frequencies = FileParser.GetCaptureValues(fileContent, frequenciesRx);
 
             return ListConverter.StringToFloat(frequencies);

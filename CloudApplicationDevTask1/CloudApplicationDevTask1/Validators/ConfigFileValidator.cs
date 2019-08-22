@@ -137,6 +137,7 @@ namespace CloudApplicationDevTask1.validators
                         if (allocation[allocationProcessorId][taskId])
                         {
                             processorId = allocationProcessorId;
+                            break;
                         }
                     }
 

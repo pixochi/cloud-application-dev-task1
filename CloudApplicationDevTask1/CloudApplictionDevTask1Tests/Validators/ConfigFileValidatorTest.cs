@@ -138,27 +138,27 @@ namespace CloudApplictionDevTask1Tests
             string configFileContent = @"
                 // Task runtimes are based on tasks executing on
                 // a processor running at the following frequency (GHz).
-                RUNTIME-REFERENCE-FREQUENCY,2
+                RUNTIME-REFERENCE-FREQUENCY,1
 
                 // Task IDs and their runtime values.
                 TASK-ID,RUNTIME
                 1,1
                 2,1
-                3,2
+                3,1
                 4,1
-                5,3
+                5,1
 
                 // Processor IDs and their frequency values.
                 PROCESSOR-ID,FREQUENCY
-                1,1.7
-                2,2.3
-                3,2.9
+                1,1
+                2,1
+                3,1
 
                 // Quadratic coefficient IDs and their values.
                 COEFFICIENT-ID,VALUE
-                0,25
-                1,-25
-                2,10
+                0,1
+                1,1
+                2,1
             ";
 
             List<List<bool>> allocation = new List<List<bool>>();
@@ -178,7 +178,7 @@ namespace CloudApplictionDevTask1Tests
 
             float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation);
 
-            Assert.AreEqual(193.8, Math.Round(energyConsumed, 2));
+            Assert.AreEqual(15, Math.Round(energyConsumed, 2));
         }
     }
 }
