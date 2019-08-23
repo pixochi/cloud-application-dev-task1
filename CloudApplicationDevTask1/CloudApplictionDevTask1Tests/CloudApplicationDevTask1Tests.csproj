@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Dummies\ConfigFileDummies.cs" />
     <Compile Include="Dummies\TaskAllocationFileDummies.cs" />
+    <Compile Include="Services\AllocationServiceTests.cs" />
     <Compile Include="Validators\TaskAllocationFileValidatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\ConfigFileValidatorTest.cs" />

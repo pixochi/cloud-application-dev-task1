@@ -9,13 +9,11 @@ namespace CloudApplicationDevTask1.Services
 {
     public static class AllocationService
     {
-        // TODO: test
         public static float GetEnergyConsumedPerTask(List<float> coefficients, float frequency, float runtime)
         {
             return (coefficients[2] * frequency * frequency + coefficients[1] * frequency + coefficients[0]) * runtime;
         }
 
-        // TODO: test
         public static float GetTotalEnergyConsumed(string configFileContent, List<List<bool>> allocation)
         {
             List<float> coefficients = ConfigFileParser.GetCoefficients(configFileContent);
@@ -49,13 +47,11 @@ namespace CloudApplicationDevTask1.Services
             }
         }
 
-        // TODO: Test
         public static float GetTaskRuntime(float referenceFrequency, float runtime, float frequency)
         {
             return runtime * (referenceFrequency / frequency);
         }
 
-        // TODO: test
         public static float GetAllocationRuntime(string configFileContent, List<List<bool>> allocation)
         {
             List<float> processorFrequencies = ConfigFileParser.GetProcessorFrequencies(configFileContent);
@@ -66,23 +62,36 @@ namespace CloudApplicationDevTask1.Services
             if (processorFrequencies.Count == 0 || taskRuntimes.Count == 0 || allocation.Count == 0 || runtimeReferenceFrequency == -1) {
                 return -1;
             }
-            else {
-                for (int processorId = 0; processorId < allocation.Count; processorId++) {
+            else
+            {
+                for (int processorId = 0; processorId < allocation.Count; processorId++)
+                {
                     float processorRuntime = 0;
 
-                    for (int taskId = 0; taskId < allocation[processorId].Count; taskId++) {
-                        if (allocation[processorId][taskId]) {
+                    for (int taskId = 0; taskId < allocation[processorId].Count; taskId++)
+                    {
+                        if (allocation[processorId][taskId])
+                        {
                             processorRuntime += GetTaskRuntime(runtimeReferenceFrequency, taskRuntimes[taskId], processorFrequencies[processorId]);
                         }
                     }
 
-                    if (processorRuntime >= allocationRuntime) {
+                    if (processorRuntime >= allocationRuntime)
+                    {
                         allocationRuntime = processorRuntime;
                     }
                 }
 
                 return allocationRuntime;
             }
+        }
+
+        public static string IsAllocationRuntimeValid(string configFileContent, float allocationRuntime)
+        {
+            string errorMsg = "Runtime of the given allocation exceeds maximum duration of the program.";
+            float maxDuration = ConfigFileParser.GetMaximumDuration(configFileContent);
+    
+            return allocationRuntime <= maxDuration ? "" : errorMsg;
         }
     }
 }

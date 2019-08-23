@@ -117,7 +117,7 @@ namespace Task1GUIForm
             var allocations = TaskAllocationFileParser.GetAllocations(TANFileContent);
             foreach (var allocation in allocations) {
                 float allocationRuntime = AllocationService.GetAllocationRuntime(configFileContent, allocation.Value);
-                string allocationRuntimeErrorMsg = ConfigFileValidator.IsAllocationRuntimeValid(configFileContent, allocationRuntime);
+                string allocationRuntimeErrorMsg = AllocationService.IsAllocationRuntimeValid(configFileContent, allocationRuntime);
 
                 displayAllocation(allocation);
 

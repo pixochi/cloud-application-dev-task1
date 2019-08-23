@@ -29,8 +29,7 @@ namespace CloudApplicationDevTask1.validators
             {"Runtimes", "The config file contains an invalid section containing tasks runtimes." },
             {"RuntimesIds", "The config file contains repeating task ids"},
             {"ProcessorFrequencies", "The config file contains an invalid section with processor frequencies"},
-            {"ProcessorFrequenciesIds", "The config file contains repeating processor ids"},
-            {"AllocationRuntime", "Runtime of the given allocation exceeds maximum duration of the program."}
+            {"ProcessorFrequenciesIds", "The config file contains repeating processor ids"}
         };
 
         public static string ContainsLogFilePath(string fileContent)
@@ -134,12 +133,6 @@ namespace CloudApplicationDevTask1.validators
             }
 
             return errorsList;
-        }
-
-        public static string IsAllocationRuntimeValid(string fileContent, float allocationRuntime)
-        {
-            float maxDuration = ConfigFileParser.GetMaximumDuration(fileContent);
-            return allocationRuntime <= maxDuration ? "" : ConfigErrors["AllocationRuntime"];
         }
 
     }
