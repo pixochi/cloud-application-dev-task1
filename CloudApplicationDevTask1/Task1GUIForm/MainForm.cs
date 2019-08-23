@@ -11,6 +11,7 @@ using CloudApplicationDevTask1;
 using CloudApplicationDevTask1.validators;
 using System.IO;
 using CloudApplicationDevTask1.Parsers;
+using CloudApplicationDevTask1.Services;
 
 namespace Task1GUIForm
 {
@@ -55,7 +56,7 @@ namespace Task1GUIForm
 
             if (isTANFileValid && isConfigFileValid)
             {
-                displayAllocations(TANfileContent, configFileContent);
+                displayAllocationDetails(TANfileContent, configFileContent);
             }
         }
 
@@ -111,29 +112,40 @@ namespace Task1GUIForm
             }
         }
 
-        private void displayAllocations(string TANFileContent, string configFileContent)
+        private void displayAllocationDetails(string TANFileContent, string configFileContent)
         {
             var allocations = TaskAllocationFileParser.GetAllocations(TANFileContent);
             foreach (var allocation in allocations) {
-                float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation.Value);
-                float allocationRuntime = ConfigFileValidator.GetAllocationRuntime(configFileContent, allocation.Value);
+                float allocationRuntime = AllocationService.GetAllocationRuntime(configFileContent, allocation.Value);
+                string allocationRuntimeErrorMsg = ConfigFileValidator.IsAllocationRuntimeValid(configFileContent, allocationRuntime);
 
-                mainFormTextBox.AppendText($"Allocation {allocation.Key}{Environment.NewLine}");
-                mainFormTextBox.AppendText($"Time = {allocationRuntime}, Energy = {energyConsumed}{Environment.NewLine}");
+                displayAllocation(allocation);
 
-                foreach (var processor in allocation.Value)
+                if (allocationRuntimeErrorMsg == "")
                 {
-                    for (int taskId = 0; taskId < processor.Count; taskId++)
-                    {
-                        mainFormTextBox.Text += processor[taskId] ? "1" : "0";
+                    float energyConsumed = AllocationService.GetTotalEnergyConsumed(configFileContent, allocation.Value);
+                    mainFormTextBox.AppendText($"Time = {allocationRuntime}, Energy = {energyConsumed}");
+                }
+                else
+                {
+                    mainFormTextBox.AppendText(allocationRuntimeErrorMsg);
+                }
 
-                        if (taskId != processor.Count - 1)
-                        {
-                            mainFormTextBox.Text += ",";
-                        }
+                mainFormTextBox.AppendText(Environment.NewLine);
+                mainFormTextBox.AppendText(Environment.NewLine);
+            }
+        }
+
+        private void displayAllocation(KeyValuePair<string, List<List<bool>>> allocation)
+        {
+            mainFormTextBox.AppendText($"Allocation {allocation.Key}{Environment.NewLine}");
+            foreach (var processor in allocation.Value) {
+                for (int taskId = 0; taskId < processor.Count; taskId++) {
+                    mainFormTextBox.Text += processor[taskId] ? "1" : "0";
+
+                    if (taskId != processor.Count - 1) {
+                        mainFormTextBox.Text += ",";
                     }
-
-                    mainFormTextBox.AppendText(Environment.NewLine);
                 }
 
                 mainFormTextBox.AppendText(Environment.NewLine);

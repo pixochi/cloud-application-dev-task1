@@ -50,5 +50,17 @@ namespace CloudApplicationDevTask1.Parsers
 
             return -1;
         }
+
+        public static float GetMaximumDuration(string fileContent)
+        {
+            Regex maximumDurationRx = new Regex(@"PROGRAM-MAXIMUM-DURATION,(\d+(?:\.\d+)?)");
+            List<string> captureValues = FileParser.GetCaptureValues(fileContent, maximumDurationRx);
+
+            if (captureValues.Count != 0) {
+                return float.Parse(captureValues.First());
+            }
+
+            return -1;
+        }
     }
 }

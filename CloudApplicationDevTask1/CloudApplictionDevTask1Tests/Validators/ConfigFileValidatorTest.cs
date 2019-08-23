@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CloudApplicationDevTask1.validators;
 using CloudApplictionDevTask1Tests.Dummies;
 using System.Collections.Generic;
+using CloudApplicationDevTask1.Services;
 
 namespace CloudApplictionDevTask1Tests
 {
@@ -127,7 +128,7 @@ namespace CloudApplictionDevTask1Tests
             };
             allocation.Add(processor1);
 
-            float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation);
+            float energyConsumed = AllocationService.GetTotalEnergyConsumed(configFileContent, allocation);
 
             Assert.AreEqual(-1, energyConsumed);
         }
@@ -176,7 +177,7 @@ namespace CloudApplictionDevTask1Tests
             allocation.Add(processor2);
             allocation.Add(processor3);
 
-            float energyConsumed = ConfigFileValidator.GetTotalEnergyConsumed(configFileContent, allocation);
+            float energyConsumed = AllocationService.GetTotalEnergyConsumed(configFileContent, allocation);
 
             Assert.AreEqual(15, Math.Round(energyConsumed, 2));
         }
