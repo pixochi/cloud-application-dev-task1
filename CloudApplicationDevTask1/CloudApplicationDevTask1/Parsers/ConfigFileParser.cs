@@ -8,55 +8,82 @@ using System.Threading.Tasks;
 
 namespace CloudApplicationDevTask1.Parsers
 {
+    // Parser for a configuration text file
     public static class ConfigFileParser
     {
-        public static List<float> GetCoefficients(string fileContent)
+        /// <summary>
+        /// Extracts coefficient values
+        /// </summary>
+        public static List<float> GetCoefficients(string configFileContent)
         {
-            Regex coefficientsRx = new Regex(@"COEFFICIENT-ID,VALUE(?:\n|\r|\r\n)(?:\s*\d+,(-?\d+(?:\.?\d+)?)(?:\n|\r|\r\n)?)+");
-            List<string> coefficients = FileParser.GetCaptureValues(fileContent, coefficientsRx);
+            Regex coefficientsRx = new Regex($@"COEFFICIENT-ID,VALUE(?:{FileParser.NewLineRx})(?:\s*\d+,(-?\d+(?:\.?\d+)?)(?:{FileParser.NewLineRx})?)+");
+            List<string> coefficients = FileParser.GetCaptureValues(configFileContent, coefficientsRx);
             return ListConverter.StringToFloat(coefficients);
         }
 
-        public static List<float> GetProcessorFrequencies(string fileContent)
+        /// <summary>
+        /// Extracts frequencies of provided processors
+        /// </summary>
+        public static List<float> GetProcessorFrequencies(string configFileContent)
         {
-            Regex frequenciesRx = new Regex(@"PROCESSOR-ID,FREQUENCY(?:\n|\r|\r\n)(?:\s*\d+,(\d+(?:\.?\d+)?)(?:\n|\r|\r\n)?)+");
-            List<string> frequencies = FileParser.GetCaptureValues(fileContent, frequenciesRx);
+            Regex frequenciesRx = new Regex($@"PROCESSOR-ID,FREQUENCY(?:{FileParser.NewLineRx})(?:\s*\d+,(\d+(?:\.?\d+)?)(?:{FileParser.NewLineRx})?)+");
+            List<string> frequencies = FileParser.GetCaptureValues(configFileContent, frequenciesRx);
 
             return ListConverter.StringToFloat(frequencies);
         }
 
-        public static List<string> GetProcessorIds(string fileContent)
+        /// <summary>
+        /// Extracts ids of provided processors
+        /// </summary>
+        public static List<string> GetProcessorIds(string configFileContent)
         {
-            Regex processorIdsRx = new Regex(@"PROCESSOR-ID,FREQUENCY(?:\n|\r|\r\n)(?:\s*(\d+),\d+\.\d+(?:\n|\r|\r\n)?)+");
-            return FileParser.GetCaptureValues(fileContent, processorIdsRx);
+            Regex processorIdsRx = new Regex($@"PROCESSOR-ID,FREQUENCY(?:{FileParser.NewLineRx})(?:\s*(\d+),\d+\.\d+(?:{FileParser.NewLineRx})?)+");
+            return FileParser.GetCaptureValues(configFileContent, processorIdsRx);
         }
 
-        public static List<float> GetTaskRuntimes(string fileContent)
+        /// <summary>
+        /// Extracts runtimes of each task
+        /// </summary>
+        public static List<float> GetTaskRuntimes(string configFileContent)
         {
-            Regex runtimesRx = new Regex(@"TASK-ID,RUNTIME(?:\n|\r|\r\n)(?:\s*\d+,(\d+(?:\.\d+)?)(?:\n|\r|\r\n)?)+");
-            List<string> runtimes = FileParser.GetCaptureValues(fileContent, runtimesRx);
+            Regex runtimesRx = new Regex($@"TASK-ID,RUNTIME(?:{FileParser.NewLineRx})(?:\s*\d+,(\d+(?:\.\d+)?)(?:{FileParser.NewLineRx})?)+");
+            List<string> runtimes = FileParser.GetCaptureValues(configFileContent, runtimesRx);
 
             return ListConverter.StringToFloat(runtimes);
         }
 
-        public static float GetRuntimeReferenceFrequency(string fileContent)
+        /// <summary>
+        /// Extracts a reference frequency used to determine runtime of each task
+        /// </summary>
+        /// <returns>
+        /// Reference frequency or -1 if it is not provided in a configuration file
+        /// </returns>
+        public static float GetRuntimeReferenceFrequency(string configFileContent)
         {
             Regex runtimeReferenceFrequencyRx = new Regex(@"RUNTIME-REFERENCE-FREQUENCY,(\d+(?:\.\d+)?)");
-            List<string> captureValues = FileParser.GetCaptureValues(fileContent, runtimeReferenceFrequencyRx);
+            List<string> captureValues = FileParser.GetCaptureValues(configFileContent, runtimeReferenceFrequencyRx);
 
-            if (captureValues.Count != 0) {
+            if (captureValues.Count != 0)
+            {
                 return float.Parse(captureValues.First());
             }
 
             return -1;
         }
 
-        public static float GetMaximumDuration(string fileContent)
+        /// <summary>
+        /// Extracts the maximum program duration
+        /// </summary>
+        /// <returns>
+        /// Reference the maximum duration or -1 if it is not provided in a configuration file
+        /// </returns>
+        public static float GetMaximumDuration(string configFileContent)
         {
             Regex maximumDurationRx = new Regex(@"PROGRAM-MAXIMUM-DURATION,(\d+(?:\.\d+)?)");
-            List<string> captureValues = FileParser.GetCaptureValues(fileContent, maximumDurationRx);
+            List<string> captureValues = FileParser.GetCaptureValues(configFileContent, maximumDurationRx);
 
-            if (captureValues.Count != 0) {
+            if (captureValues.Count != 0)
+            {
                 return float.Parse(captureValues.First());
             }
 

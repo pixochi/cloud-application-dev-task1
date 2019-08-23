@@ -7,14 +7,23 @@ using System.Threading.Tasks;
 
 namespace CloudApplicationDevTask1.Parsers
 {
+    // Parser for a task allocation text file
     public static class TaskAllocationFileParser
     {
-        public static string GetConfigFilename(string fileContent)
+        /// <summary>
+        /// Extracts a name of configuration file
+        /// </summary>
+        /// <returns>
+        /// Reference a name of configuration file
+        /// or an empty string if it is not provided in a configuration file
+        /// </returns>
+        public static string GetConfigFilename(string TANFileContent)
         {
             Regex rx = new Regex(@"CONFIGURATION,""(.*\.csv)""");
-            Match match = FileParser.GetRegexMatch(fileContent, rx);
+            Match match = FileParser.GetRegexMatch(TANFileContent, rx);
 
-            if (!match.Success) {
+            if (!match.Success)
+            {
                 return "";
             }
             else
@@ -23,23 +32,28 @@ namespace CloudApplicationDevTask1.Parsers
             }
         }
 
-        public static Dictionary<string, List<List<bool>>> GetAllocations(string fileContent)
+        /// <summary>
+        /// Extracts all allocations
+        /// </summary>
+        public static Dictionary<string, List<List<bool>>> GetAllocations(string TANFileContent)
         {
             var allocations = new Dictionary<string, List<List<bool>>>();
             Regex allocationsRx = new Regex($@"ALLOCATION-ID,\d+(?:{FileParser.NewLineRx})(?:\s*((?:(?:0|1),?)+)(?:{FileParser.NewLineRx})?)+");
-            MatchCollection allocationMatches = allocationsRx.Matches(fileContent);
+            MatchCollection allocationMatches = allocationsRx.Matches(TANFileContent);
             Console.WriteLine(allocationMatches);
             
-
-            foreach (Match allocationMatch in allocationMatches) {
+            foreach (Match allocationMatch in allocationMatches)
+            {
                 List<string> allocationProcessors = FileParser.GetCaptureValuesFromMatch(allocationMatch);
                 List<List<bool>> allocation = new List<List<bool>>();
 
-                foreach (var processor in allocationProcessors) {
+                foreach (var processor in allocationProcessors)
+                {
                     List<bool> processorTasks = new List<bool>();
                     string[] tasksOnProcessor = processor.Split(',');
 
-                    foreach (var task in tasksOnProcessor) {    
+                    foreach (var task in tasksOnProcessor)
+                    {    
                         processorTasks.Add(task == "1");
                     }
 

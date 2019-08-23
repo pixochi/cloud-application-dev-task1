@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace CloudApplicationDevTask1.Converters
 {
+    // Converts List and its items to other data types
     public static class ListConverter
     {
+        /// <summary>
+        /// Converts string representation of items to its corresponding float values
+        /// </summary>
         public static List<float> StringToFloat(List<string> stringList)
         {
             List<float> floatList = new List<float>();
 
-            foreach (string stringItem in stringList) {
+            foreach (string stringItem in stringList)
+            {
                 floatList.Add(float.Parse(stringItem));
             }
 
