@@ -17,12 +17,15 @@ namespace CloudApplicationDevTask1
         /// <param name="fileContent">Content of a file</param>
         public static string DataMixedWithComments(string fileContent)
         {
-            using (StringReader reader = new StringReader(fileContent)) {
+            using (StringReader reader = new StringReader(fileContent))
+            {
                 string errorMsg = "";
                 string line;
-                while ((line = reader.ReadLine()) != null && errorMsg == "") {
+                while ((line = reader.ReadLine()) != null && errorMsg == "")
+                {
                     line = line.Trim();
-                    if (!line.StartsWith("//") && line.Contains("//")) {
+                    if (!line.StartsWith("//") && line.Contains("//"))
+                    {
                         errorMsg = "Mixing data and a comment on one line is not allowed";
                     }
                 }

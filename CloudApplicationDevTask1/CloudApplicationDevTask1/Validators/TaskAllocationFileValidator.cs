@@ -33,15 +33,19 @@ namespace CloudApplicationDevTask1
         /// <param name="TANFileContent">Content of a file</param>
         public static string ContainsValidConfigPath(string TANFileContent)
         {
-            using (StringReader reader = new StringReader(TANFileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent))
+            {
                 bool isConfigPathValid = false;
                 string line;
                 Regex rx = new Regex(@"CONFIGURATION,"".*\.csv""");
-                while ((line = reader.ReadLine()) != null && !isConfigPathValid) {
+
+                while ((line = reader.ReadLine()) != null && !isConfigPathValid)
+                {
                     line = line.Trim();
                     MatchCollection matches = rx.Matches(line);
 
-                    if (matches.Count == 1) {
+                    if (matches.Count == 1)
+                    {
                         isConfigPathValid = true;
                     }
                 }
@@ -60,15 +64,19 @@ namespace CloudApplicationDevTask1
         /// <param name="TANFileContent">Content of a file</param>
         public static string ContainsValidTasksLine(string TANFileContent)
         {
-            using (StringReader reader = new StringReader(TANFileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent))
+            {
                 bool isTasksLineValid = false;
                 string line;
                 Regex rx = new Regex(@"TASKS,\d");
-                while ((line = reader.ReadLine()) != null && !isTasksLineValid) {
+
+                while ((line = reader.ReadLine()) != null && !isTasksLineValid)
+                {
                     line = line.Trim();
                     MatchCollection matches = rx.Matches(line);
 
-                    if (matches.Count == 1) {
+                    if (matches.Count == 1)
+                    {
                         isTasksLineValid = true;
                     }
                 }
@@ -87,15 +95,19 @@ namespace CloudApplicationDevTask1
         /// <param name="TANFileContent">Content of a file</param>
         public static string ContainsValidProcessorsLine(string TANFileContent)
         {
-            using (StringReader reader = new StringReader(TANFileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent))
+            {
                 bool isAllocationsLineValid = false;
                 string line;
                 Regex rx = new Regex(@"PROCESSORS,\d");
-                while ((line = reader.ReadLine()) != null && !isAllocationsLineValid) {
+
+                while ((line = reader.ReadLine()) != null && !isAllocationsLineValid)
+                {
                     line = line.Trim();
                     MatchCollection matches = rx.Matches(line);
 
-                    if (matches.Count == 1) {
+                    if (matches.Count == 1)
+                    {
                         isAllocationsLineValid = true;
                     }
                 }
@@ -114,15 +126,19 @@ namespace CloudApplicationDevTask1
         /// <param name="TANFileContent">Content of a file</param>
         public static string ContainsValidAllocationsLine(string TANFileContent)
         {
-            using (StringReader reader = new StringReader(TANFileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent))
+            {
                 bool isAllocationsLineValid = false;
                 string line;
                 Regex rx = new Regex(@"ALLOCATIONS,\d");
-                while ((line = reader.ReadLine()) != null && !isAllocationsLineValid) {
+
+                while ((line = reader.ReadLine()) != null && !isAllocationsLineValid)
+                {
                     line = line.Trim();
                     MatchCollection matches = rx.Matches(line);
 
-                    if (matches.Count == 1) {
+                    if (matches.Count == 1)
+                    {
                         isAllocationsLineValid = true;
                     }
                 }
@@ -145,37 +161,47 @@ namespace CloudApplicationDevTask1
             int allocationConfigCount = 0;
             int totalAllocationCount = 0;
 
-            using (StringReader reader = new StringReader(TANFileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent))
+            {
                 string line;
                 Regex totalAllocationCountRx = new Regex(@"ALLOCATIONS,(\d)");
                 Regex singleAllocationRx = new Regex(@"ALLOCATION-ID,(\d)");
                 
-                while ((line = reader.ReadLine()) != null) {
+                while ((line = reader.ReadLine()) != null)
+                {
                     line = line.Trim();
                     Match totalAllocationCountMatch = totalAllocationCountRx.Match(line);
                     Match singleAllocationMatch = singleAllocationRx.Match(line);
 
-                    if (totalAllocationCountMatch.Success) {
+                    if (totalAllocationCountMatch.Success)
+                    {
                         totalAllocationCount = UInt16.Parse(totalAllocationCountMatch.Groups[1].Value);
                     }
-                    else if (singleAllocationMatch.Success) {
+                    else if (singleAllocationMatch.Success)
+                    {
                         allocationConfigCount++;
                     
                         // Read tasks per processor and check validity
                         string allocationId = singleAllocationMatch.Groups[1].Value;
                         List<string> processors = new List<string>();
-                        while ((line = reader.ReadLine()) != null && Allocation.IsProcessorLine(line)) {
+
+                        while ((line = reader.ReadLine()) != null && Allocation.IsProcessorLine(line))
+                        {
                             processors.Add(line);
                         }
+
                         Allocation allocation = new Allocation(allocationId, processors);
-                        if (!allocation.IsAllocationValid()) {
+
+                        if (!allocation.IsAllocationValid())
+                        {
                             return AllocationErrors["InvalidTaskAllocation"];
                         }
                     }
                 }
             }
 
-            if (allocationConfigCount != totalAllocationCount) {    
+            if (allocationConfigCount != totalAllocationCount)
+            {    
                 return TaskAllocationFileValidator.AllocationErrors["WrongAllocationCount"];
             }
 
@@ -189,13 +215,16 @@ namespace CloudApplicationDevTask1
         /// A list of all error messages
         /// </returns>
         /// <param name="TANFileContent">Content of a file</param>
-        public static List<string> ValidateAll(string TANFileContent) {
+        public static List<string> ValidateAll(string TANFileContent)
+        {
             List<string> errorsList = new List<string>();
 
-            foreach (var taskAllocationFileValidator in validationMethods) {
+            foreach (var taskAllocationFileValidator in validationMethods)
+            {
                 string errorMsg = taskAllocationFileValidator(TANFileContent);
 
-                if (errorMsg != "") {
+                if (errorMsg != "")
+                {
                     errorsList.Add(errorMsg);
                 }
             }
