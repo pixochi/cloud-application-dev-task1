@@ -59,7 +59,7 @@ namespace CloudApplicationDevTask1.validators
         /// <param name="configFileContent">Content of a configuration file</param>
         public static string ContainsLimitSection(string configFileContent)
         {
-            Regex limitSectionRx = new Regex(@"LIMITS-TASKS,\d+,\d+(\n|\r|\r\n)\s*LIMITS-PROCESSORS,\d+,\d+(\n|\r|\r\n)\s*LIMITS-PROCESSOR-FREQUENCIES,\d+,\d+");
+            Regex limitSectionRx = new Regex($@"LIMITS-TASKS,\d+,\d+({FileParser.NewLineRx})\s*LIMITS-PROCESSORS,\d+,\d+({FileParser.NewLineRx})\s*LIMITS-PROCESSOR-FREQUENCIES,\d+,\d+");
             bool isValid = FileParser.ContainsRegex(configFileContent, limitSectionRx);
 
             return isValid ? "" : ConfigErrors["LimitSection"];
@@ -75,8 +75,7 @@ namespace CloudApplicationDevTask1.validators
         /// <param name="configFileContent">Content of a configuration file</param>
         public static string ContainsParallelSection(string configFileContent)
         {
-            // TODO: save (\n|\r|\r\n) as a newline
-            Regex parallelSectionRx = new Regex(@"PROGRAM-MAXIMUM-DURATION,\d+(\n|\r|\r\n)\s*PROGRAM-TASKS,\d+(\n|\r|\r\n)\s*PROGRAM-PROCESSORS,\d+");
+            Regex parallelSectionRx = new Regex($@"PROGRAM-MAXIMUM-DURATION,\d+({FileParser.NewLineRx})\s*PROGRAM-TASKS,\d+({FileParser.NewLineRx})\s*PROGRAM-PROCESSORS,\d+");
             bool isValid = FileParser.ContainsRegex(configFileContent, parallelSectionRx);
 
             return isValid ? "" : ConfigErrors["ParallelSection"];
@@ -108,7 +107,7 @@ namespace CloudApplicationDevTask1.validators
         /// <param name="configFileContent">Content of a configuration file</param>
         public static string ContainsRuntimes(string configFileContent)
         {
-            Regex runtimesRx = new Regex(@"TASK-ID,RUNTIME(?:\n|\r|\r\n)(?:\s*(\d+),\d+(?:\n|\r|\r\n)?)+");
+            Regex runtimesRx = new Regex($@"TASK-ID,RUNTIME(?:{FileParser.NewLineRx})(?:\s*(\d+),\d+(?:{FileParser.NewLineRx})?)+");
             Match match = FileParser.GetRegexMatch(configFileContent, runtimesRx);
 
             if (!match.Success)
