@@ -15,6 +15,11 @@ namespace CloudApplicationDevTask1.Parsers
         /// <summary>
         /// Checks if a provided text contains a given regex
         /// </summary>
+        /// <returns>
+        /// true if a match is found
+        /// </returns>
+        /// <param name="fileContent">Content of a file to be tested against a provided regular expression</param>
+        /// <param name="rx">Regular expression to be used for searching in a provided text</param>
         public static bool ContainsRegex(string fileContent, Regex rx)
         {
             Match match = rx.Match(fileContent);
@@ -24,6 +29,11 @@ namespace CloudApplicationDevTask1.Parsers
         /// <summary>
         /// Finds a match in a provided text with a given regex
         /// </summary>
+        /// <returns>
+        /// a found match
+        /// </returns>
+        /// <param name="fileContent">Content of a file to be tested against a provided regular expression</param>
+        /// <param name="rx">Regular expression to be used for searching in a provided text</param>
         public static Match GetRegexMatch(string fileContent, Regex rx)
         {
             Match match = rx.Match(fileContent);
@@ -33,6 +43,11 @@ namespace CloudApplicationDevTask1.Parsers
         /// <summary>
         /// Gets capture values in a provided text with a given regex
         /// </summary>
+        /// <returns>
+        /// Capture values found in the text
+        /// </returns>
+        /// <param name="fileContent">Content of a file to be tested against a provided regular expression</param>
+        /// <param name="rx">Regular expression to be used for searching in a provided text</param>
         public static List<string> GetCaptureValues(string fileContent, Regex rx)
         {
             Match match = GetRegexMatch(fileContent, rx);
@@ -42,6 +57,10 @@ namespace CloudApplicationDevTask1.Parsers
         /// <summary>
         /// Gets capture values from a given match
         /// </summary>
+        /// <returns>
+        /// Capture values found in a match
+        /// </returns>
+        /// <param name="match">A match with capture values</param>
         public static List<string> GetCaptureValuesFromMatch(Match match)
         {
             List<string> captureValues = new List<string>();

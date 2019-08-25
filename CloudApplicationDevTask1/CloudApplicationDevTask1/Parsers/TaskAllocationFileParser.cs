@@ -17,6 +17,7 @@ namespace CloudApplicationDevTask1.Parsers
         /// Reference a name of configuration file
         /// or an empty string if it is not provided in a configuration file
         /// </returns>
+        /// <param name="TANFileContent">Content of a task allocation file</param>
         public static string GetConfigFilename(string TANFileContent)
         {
             Regex rx = new Regex(@"CONFIGURATION,""(.*\.csv)""");
@@ -35,6 +36,10 @@ namespace CloudApplicationDevTask1.Parsers
         /// <summary>
         /// Extracts all allocations
         /// </summary>
+        /// <returns>
+        /// All allocations found in a file content
+        /// </returns>
+        /// <param name="TANFileContent">Content of a task allocation file</param>
         public static Dictionary<string, List<List<bool>>> GetAllocations(string TANFileContent)
         {
             var allocations = new Dictionary<string, List<List<bool>>>();

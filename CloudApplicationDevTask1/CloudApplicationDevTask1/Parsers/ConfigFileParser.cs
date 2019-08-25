@@ -12,8 +12,13 @@ namespace CloudApplicationDevTask1.Parsers
     public static class ConfigFileParser
     {
         /// <summary>
-        /// Extracts coefficient values
+        /// Extracts coefficient of a quadratic formula to compute
+        /// the energy consumed per second by a processor.
         /// </summary>
+        /// <returns>
+        /// Coefficients of a quadratic formula
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
         public static List<float> GetCoefficients(string configFileContent)
         {
             Regex coefficientsRx = new Regex($@"COEFFICIENT-ID,VALUE(?:{FileParser.NewLineRx})(?:\s*\d+,(-?\d+(?:\.?\d+)?)(?:{FileParser.NewLineRx})?)+");
@@ -22,8 +27,12 @@ namespace CloudApplicationDevTask1.Parsers
         }
 
         /// <summary>
-        /// Extracts frequencies of provided processors
+        /// Extracts frequencies of provided processors.
         /// </summary>
+        /// <returns>
+        /// Frequencies of processors
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
         public static List<float> GetProcessorFrequencies(string configFileContent)
         {
             Regex frequenciesRx = new Regex($@"PROCESSOR-ID,FREQUENCY(?:{FileParser.NewLineRx})(?:\s*\d+,(\d+(?:\.?\d+)?)(?:{FileParser.NewLineRx})?)+");
@@ -33,8 +42,12 @@ namespace CloudApplicationDevTask1.Parsers
         }
 
         /// <summary>
-        /// Extracts ids of provided processors
+        /// Extracts ids of provided processors.
         /// </summary>
+        /// <returns>
+        /// Ids of used processors
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
         public static List<string> GetProcessorIds(string configFileContent)
         {
             Regex processorIdsRx = new Regex($@"PROCESSOR-ID,FREQUENCY(?:{FileParser.NewLineRx})(?:\s*(\d+),\d+\.\d+(?:{FileParser.NewLineRx})?)+");
@@ -44,6 +57,10 @@ namespace CloudApplicationDevTask1.Parsers
         /// <summary>
         /// Extracts runtimes of each task
         /// </summary>
+        /// <returns>
+        /// Runtimes of each task
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
         public static List<float> GetTaskRuntimes(string configFileContent)
         {
             Regex runtimesRx = new Regex($@"TASK-ID,RUNTIME(?:{FileParser.NewLineRx})(?:\s*\d+,(\d+(?:\.\d+)?)(?:{FileParser.NewLineRx})?)+");
@@ -58,6 +75,7 @@ namespace CloudApplicationDevTask1.Parsers
         /// <returns>
         /// Reference frequency or -1 if it is not provided in a configuration file
         /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
         public static float GetRuntimeReferenceFrequency(string configFileContent)
         {
             Regex runtimeReferenceFrequencyRx = new Regex(@"RUNTIME-REFERENCE-FREQUENCY,(\d+(?:\.\d+)?)");
@@ -77,6 +95,7 @@ namespace CloudApplicationDevTask1.Parsers
         /// <returns>
         /// Reference the maximum duration or -1 if it is not provided in a configuration file
         /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
         public static float GetMaximumDuration(string configFileContent)
         {
             Regex maximumDurationRx = new Regex(@"PROGRAM-MAXIMUM-DURATION,(\d+(?:\.\d+)?)");

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CloudApplicationDevTask1.validators
 {
+    // Validator for a configuration file
     public class ConfigFileValidator: FileValidator
     {
         delegate string ValidationFunction(string fileContent);
@@ -32,6 +33,9 @@ namespace CloudApplicationDevTask1.validators
             {"ProcessorFrequenciesIds", "The config file contains repeating processor ids"}
         };
 
+        /// <summary>
+        /// Checks if a provided configuration file contains a log file path
+        /// </summary>
         public static string ContainsLogFilePath(string fileContent)
         {
             Regex logFileRx = new Regex(@"DEFAULT-LOGFILE,"".*\.txt""");
