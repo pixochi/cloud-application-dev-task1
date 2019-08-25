@@ -46,17 +46,21 @@ namespace Task1GUIForm
             string TANfileContent = FileService.ReadFile(TANfileName);
 
             string configFilename = TaskAllocationFileParser.GetConfigFilename(TANfileContent);
-            string path = Path.GetDirectoryName(TANfileName);
-            string configFilePath = path + @"\" + configFilename;
-            string configFileContent = FileService.ReadFile(configFilePath);
 
-            initFileValidation();
-            bool isTANFileValid = validateTANFile(TANfileContent);
-            bool isConfigFileValid = validateConfigFile(configFileContent);
-
-            if (isTANFileValid && isConfigFileValid)
+            if (configFilename != "")
             {
-                displayAllocationDetails(TANfileContent, configFileContent);
+                string path = Path.GetDirectoryName(TANfileName);
+                string configFilePath = path + @"\" + configFilename;
+                string configFileContent = FileService.ReadFile(configFilePath);
+
+                initFileValidation();
+                bool isTANFileValid = validateTANFile(TANfileContent);
+                bool isConfigFileValid = validateConfigFile(configFileContent);
+
+                if (isTANFileValid && isConfigFileValid)
+                {
+                    displayAllocationDetails(TANfileContent, configFileContent);
+                }
             }
         }
 
@@ -105,7 +109,8 @@ namespace Task1GUIForm
             {
                 mainFormTextBox.Text += "Configuration file is invalid.";
                 mainFormTextBox.AppendText(Environment.NewLine);
-                foreach (var errorMsg in configErrors) {
+                foreach (var errorMsg in configErrors)
+                {
                     errorsForm.AppendError(errorMsg);
                 }
                 return false;
@@ -139,8 +144,10 @@ namespace Task1GUIForm
         private void displayAllocation(KeyValuePair<string, List<List<bool>>> allocation)
         {
             mainFormTextBox.AppendText($"Allocation {allocation.Key}{Environment.NewLine}");
-            foreach (var processor in allocation.Value) {
-                for (int taskId = 0; taskId < processor.Count; taskId++) {
+            foreach (var processor in allocation.Value)
+            {
+                for (int taskId = 0; taskId < processor.Count; taskId++)
+                {
                     mainFormTextBox.Text += processor[taskId] ? "1" : "0";
 
                     if (taskId != processor.Count - 1) {
@@ -155,6 +162,11 @@ namespace Task1GUIForm
         private void MainForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

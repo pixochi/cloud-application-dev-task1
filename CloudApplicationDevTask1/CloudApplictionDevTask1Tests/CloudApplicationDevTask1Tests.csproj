@@ -48,7 +48,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dummies\TaskAllocationFileDummies.cs" />
     <Compile Include="Services\AllocationServiceTests.cs" />
     <Compile Include="Validators\TaskAllocationFileValidatorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
