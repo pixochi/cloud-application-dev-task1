@@ -6,10 +6,10 @@ using System.Text.RegularExpressions;
 
 namespace CloudApplicationDevTask1
 {
-
+    // Validator for content of a task allocation file
     public class TaskAllocationFileValidator: FileValidator 
     {
-        delegate string ValidationFunction(string fileContent);
+        delegate string ValidationFunction(string TANFileContent);
         private static List<ValidationFunction> validationMethods = new List<ValidationFunction>() {
                DataMixedWithComments,
                ContainsValidConfigPath,
@@ -23,12 +23,17 @@ namespace CloudApplicationDevTask1
             {"InvalidTaskAllocation", "Tasks are incorrectly assigned to processors" }
         };
 
-        // There will be a line containing the file name of a configuration file.
-        // It commences with the keyword CONFIGURATION, followed by a comma,
-        // and ends with the filename that is delimited by double quotes.
-        public static string ContainsValidConfigPath(string fileContent)
+        /// <summary>
+        /// Checks if a provided file content contains a valid path of configuration file
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="TANFileContent">Content of a file</param>
+        public static string ContainsValidConfigPath(string TANFileContent)
         {
-            using (StringReader reader = new StringReader(fileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent)) {
                 bool isConfigPathValid = false;
                 string line;
                 Regex rx = new Regex(@"CONFIGURATION,"".*\.csv""");
@@ -45,12 +50,17 @@ namespace CloudApplicationDevTask1
             }
         }
 
-        // There will be a line containing the number of program tasks.
-        // It commences with the keyword TASKS, followed by a comma,
-        // and ends with a number.
-        public static string ContainsValidTasksLine(string fileContent)
+        /// <summary>
+        /// Checks if a provided file content contains a valid number of tasks
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="TANFileContent">Content of a file</param>
+        public static string ContainsValidTasksLine(string TANFileContent)
         {
-            using (StringReader reader = new StringReader(fileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent)) {
                 bool isTasksLineValid = false;
                 string line;
                 Regex rx = new Regex(@"TASKS,\d");
@@ -67,12 +77,17 @@ namespace CloudApplicationDevTask1
             }
         }
 
-        // There will be a line containing the number of processors.
-        // It commences with the keyword PROCESSORS, followed by a comma,
-        // and ends with a number.  
-        public static string ContainsValidProcessorsLine(string fileContent)
+        /// <summary>
+        /// Checks if a provided file content contains a valid number of processors
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="TANFileContent">Content of a file</param>
+        public static string ContainsValidProcessorsLine(string TANFileContent)
         {
-            using (StringReader reader = new StringReader(fileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent)) {
                 bool isAllocationsLineValid = false;
                 string line;
                 Regex rx = new Regex(@"PROCESSORS,\d");
@@ -89,12 +104,17 @@ namespace CloudApplicationDevTask1
             }
         }
 
-        // There will be a line containing the number of allocations.
-        // It commences with the keyword ALLOCATIONS, followed by a comma,
-        // and ends with a number.
-        public static string ContainsValidAllocationsLine(string fileContent)
+        /// <summary>
+        /// Checks if a provided file content contains a valid number of allocations
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="TANFileContent">Content of a file</param>
+        public static string ContainsValidAllocationsLine(string TANFileContent)
         {
-            using (StringReader reader = new StringReader(fileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent)) {
                 bool isAllocationsLineValid = false;
                 string line;
                 Regex rx = new Regex(@"ALLOCATIONS,\d");
@@ -111,17 +131,21 @@ namespace CloudApplicationDevTask1
             }
         }
 
-        // There will be a section of data for each allocation.
-        // In general, each allocation commences an allocation ID
-        // which is followed by a table representing the allocation
-        // of 0 or more tasks to each processor.
-        public static string ContainsValidAllocations(string fileContent)
+        /// <summary>
+        /// Checks if a provided file content contains a valid definition of all allocations
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="TANFileContent">Content of a file</param>
+        public static string ContainsValidAllocations(string TANFileContent)
         {
             string errorMsg = "";
             int allocationConfigCount = 0;
             int totalAllocationCount = 0;
 
-            using (StringReader reader = new StringReader(fileContent)) {
+            using (StringReader reader = new StringReader(TANFileContent)) {
                 string line;
                 Regex totalAllocationCountRx = new Regex(@"ALLOCATIONS,(\d)");
                 Regex singleAllocationRx = new Regex(@"ALLOCATION-ID,(\d)");
@@ -158,11 +182,18 @@ namespace CloudApplicationDevTask1
             return errorMsg;
         }
 
-        public static List<string> ValidateAll(string fileContent) {
+        /// <summary>
+        /// Checks validity of a provided task allocation file
+        /// </summary>
+        /// <returns>
+        /// A list of all error messages
+        /// </returns>
+        /// <param name="TANFileContent">Content of a file</param>
+        public static List<string> ValidateAll(string TANFileContent) {
             List<string> errorsList = new List<string>();
 
             foreach (var taskAllocationFileValidator in validationMethods) {
-                string errorMsg = taskAllocationFileValidator(fileContent);
+                string errorMsg = taskAllocationFileValidator(TANFileContent);
 
                 if (errorMsg != "") {
                     errorsList.Add(errorMsg);

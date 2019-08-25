@@ -131,7 +131,7 @@ namespace CloudApplicationDevTask1.Services
         /// Checks if the runtime of an allocation exceeds the maximum program duration
         /// </summary>
         /// <returns>
-        /// An empty string is the runtime is valid,
+        /// An empty string if the runtime is valid,
         /// an error message if invalid
         /// </returns>
         /// <param name="configFileContent">Content of a configuration file</param>

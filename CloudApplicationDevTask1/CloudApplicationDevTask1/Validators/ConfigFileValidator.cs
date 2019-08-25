@@ -11,7 +11,7 @@ namespace CloudApplicationDevTask1.validators
     // Validator for a configuration file
     public class ConfigFileValidator: FileValidator
     {
-        delegate string ValidationFunction(string fileContent);
+        delegate string ValidationFunction(string configFileContent);
         private static List<ValidationFunction> validationMethods = new List<ValidationFunction>() {
                DataMixedWithComments,
                ContainsLogFilePath,
@@ -34,45 +34,82 @@ namespace CloudApplicationDevTask1.validators
         };
 
         /// <summary>
-        /// Checks if a provided configuration file contains a log file path
+        /// Checks if a provided configuration file contains a path of a log file
         /// </summary>
-        public static string ContainsLogFilePath(string fileContent)
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
+        public static string ContainsLogFilePath(string configFileContent)
         {
             Regex logFileRx = new Regex(@"DEFAULT-LOGFILE,"".*\.txt""");
-            bool isValid = FileParser.ContainsRegex(fileContent, logFileRx);
+            bool isValid = FileParser.ContainsRegex(configFileContent, logFileRx);
 
             return isValid ? "" : ConfigErrors["LogFilePath"];
         }
 
-        public static string ContainsLimitSection(string fileContent)
+        /// <summary>
+        /// Checks if a provided configuration file contains a section with limits
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
+        public static string ContainsLimitSection(string configFileContent)
         {
             Regex limitSectionRx = new Regex(@"LIMITS-TASKS,\d+,\d+(\n|\r|\r\n)\s*LIMITS-PROCESSORS,\d+,\d+(\n|\r|\r\n)\s*LIMITS-PROCESSOR-FREQUENCIES,\d+,\d+");
-            bool isValid = FileParser.ContainsRegex(fileContent, limitSectionRx);
+            bool isValid = FileParser.ContainsRegex(configFileContent, limitSectionRx);
 
             return isValid ? "" : ConfigErrors["LimitSection"];
         }
 
-        public static string ContainsParallelSection(string fileContent)
+        /// <summary>
+        /// Checks if a provided configuration file contains a section with a parallel section
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
+        public static string ContainsParallelSection(string configFileContent)
         {
             // TODO: save (\n|\r|\r\n) as a newline
             Regex parallelSectionRx = new Regex(@"PROGRAM-MAXIMUM-DURATION,\d+(\n|\r|\r\n)\s*PROGRAM-TASKS,\d+(\n|\r|\r\n)\s*PROGRAM-PROCESSORS,\d+");
-            bool isValid = FileParser.ContainsRegex(fileContent, parallelSectionRx);
+            bool isValid = FileParser.ContainsRegex(configFileContent, parallelSectionRx);
 
             return isValid ? "" : ConfigErrors["ParallelSection"];
         }
 
-        public static string ContainsFrequency(string fileContent)
+        /// <summary>
+        /// Checks if a provided configuration file contains a reference frequency
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
+        public static string ContainsFrequency(string configFileContent)
         {
             Regex frequencyConfigRx = new Regex(@"RUNTIME-REFERENCE-FREQUENCY,\d+");
-            bool isValid = FileParser.ContainsRegex(fileContent, frequencyConfigRx);
+            bool isValid = FileParser.ContainsRegex(configFileContent, frequencyConfigRx);
 
             return isValid ? "" : ConfigErrors["Frequency"];
         }
 
-        public static string ContainsRuntimes(string fileContent)
+        /// <summary>
+        /// Checks if a provided configuration file contains runtime of each task
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
+        public static string ContainsRuntimes(string configFileContent)
         {
             Regex runtimesRx = new Regex(@"TASK-ID,RUNTIME(?:\n|\r|\r\n)(?:\s*(\d+),\d+(?:\n|\r|\r\n)?)+");
-            Match match = FileParser.GetRegexMatch(fileContent, runtimesRx);
+            Match match = FileParser.GetRegexMatch(configFileContent, runtimesRx);
 
             if (!match.Success)
             {
@@ -100,10 +137,18 @@ namespace CloudApplicationDevTask1.validators
             }
         }
 
-        public static string ContainsProcessorFrequencies(string fileContent)
+        /// <summary>
+        /// Checks if a provided configuration file contains frequencies of processors
+        /// </summary>
+        /// <returns>
+        /// An empty string if it is valid,
+        /// an error message if invalid
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
+        public static string ContainsProcessorFrequencies(string configFileContent)
         {
-            List<float> processorFrequencies = ConfigFileParser.GetProcessorFrequencies(fileContent);
-            List<string> processorIds = ConfigFileParser.GetProcessorIds(fileContent);
+            List<float> processorFrequencies = ConfigFileParser.GetProcessorFrequencies(configFileContent);
+            List<string> processorIds = ConfigFileParser.GetProcessorIds(configFileContent);
 
             if (processorFrequencies.Count == 0 || processorIds.Count == 0 || processorFrequencies.Count != processorIds.Count)
             {
@@ -121,14 +166,20 @@ namespace CloudApplicationDevTask1.validators
             }
         }
 
-
-        public static List<string> ValidateAll(string fileContent)
+        /// <summary>
+        /// Checks validity of a provided configuration file
+        /// </summary>
+        /// <returns>
+        /// A list of all error messages
+        /// </returns>
+        /// <param name="configFileContent">Content of a configuration file</param>
+        public static List<string> ValidateAll(string configFileContent)
         {
             List<string> errorsList = new List<string>();
 
             foreach (var taskAllocationFileValidator in validationMethods)
             {
-                string errorMsg = taskAllocationFileValidator(fileContent);
+                string errorMsg = taskAllocationFileValidator(configFileContent);
 
                 if (errorMsg != "")
                 {
