@@ -1,0 +1,17 @@
+// The name of the configuration file.
+CONFIGURATION,"Test2.csv"
+
+// The number of tasks and processors per allocation.
+TASKS,5
+PROCESSORS,3
+
+// The number of allocations in this file.
+ALLOCATIONS,1
+
+// The set of allocations.
+// The ith row is the allocation of tasks to the ith processor.
+// The jth column is the allocation of the jth task to a processor.
+ALLOCATION-ID,1
+0,0,0,1,0
+1,0,0,0,1
+0,1,1,0,0

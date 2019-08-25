@@ -1,0 +1,36 @@
+// The default log file name.
+DEFAULT-LOGFILE,"AT1-log.txt"
+
+// Minimum and maximum limits on the number of
+// tasks and processors and processor frequencies.
+LIMITS-TASKS,1,500
+LIMITS-PROCESSORS,1,1000
+LIMITS-PROCESSOR-FREQUENCIES,0,10
+
+PROGRAM-MAXIMUM-DURATION,9
+PROGRAM-TASKS,5
+PROGRAM-PROCESSORS,3
+
+// Task runtimes are based on tasks executing on
+// a processor running at the following frequency (GHz).
+RUNTIME-REFERENCE-FREQUENCY,2
+
+// Task IDs and their runtime values.
+TASK-ID,RUNTIME
+1,1
+2,3
+3,5
+4,7
+5,9
+
+// Processor IDs and their frequency values.
+PROCESSOR-ID,FREQUENCY
+1,1.7
+2,2.3
+3,2.9
+
+// Quadratic coefficient IDs and their values.
+COEFFICIENT-ID,VALUE
+0,25
+1,-25
+2,10

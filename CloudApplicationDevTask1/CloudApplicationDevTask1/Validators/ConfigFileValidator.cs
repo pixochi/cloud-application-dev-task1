@@ -59,7 +59,7 @@ namespace CloudApplicationDevTask1.validators
         /// <param name="configFileContent">Content of a configuration file</param>
         public static string ContainsLimitSection(string configFileContent)
         {
-            Regex limitSectionRx = new Regex($@"LIMITS-TASKS,\d+,\d+({FileParser.NewLineRx})\s*LIMITS-PROCESSORS,\d+,\d+({FileParser.NewLineRx})\s*LIMITS-PROCESSOR-FREQUENCIES,\d+,\d+");
+            Regex limitSectionRx = new Regex($@"LIMITS-TASKS,\d+,\d+({FileParser.NewLineRx})\s*LIMITS-PROCESSORS,\d+,\d+({FileParser.NewLineRx})\s*LIMITS-PROCESSOR-FREQUENCIES,\d+(?:\.\d+)?,\d+(?:\.\d+)?");
             bool isValid = FileParser.ContainsRegex(configFileContent, limitSectionRx);
 
             return isValid ? "" : ConfigErrors["LimitSection"];
