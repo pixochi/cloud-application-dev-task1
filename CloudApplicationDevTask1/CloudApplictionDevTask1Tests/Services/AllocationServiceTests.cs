@@ -14,18 +14,22 @@ namespace CloudApplicationDevTask1.Services.Tests
         [TestMethod()]
         public void GetEnergyConsumedPerTaskTest()
         {
+            // Arrange
             List<float> coefficients = new List<float>() { 1, 2, 3 };
             float frequency = 1;
             float runtime = 1;
 
+            // Act
             float energyConsumed = AllocationService.GetEnergyConsumedPerTask(coefficients, frequency, runtime);
 
+            // Assert
             Assert.AreEqual(6, energyConsumed);
         }
 
         [TestMethod()]
         public void GetTotalEnergyConsumedTest()
         {
+            // Arrange
             string configFileContent = @"
                 // Task runtimes are based on tasks executing on
                 // a processor running at the following frequency (GHz).
@@ -67,20 +71,25 @@ namespace CloudApplicationDevTask1.Services.Tests
             allocation.Add(processor2);
             allocation.Add(processor3);
 
+            // Act
             float energyConsumed = AllocationService.GetTotalEnergyConsumed(configFileContent, allocation);
 
+            // Assert
             Assert.AreEqual(15, Math.Round(energyConsumed, 2));
         }
 
         [TestMethod()]
         public void GetTaskRuntimeTest()
         {
+            // Arrange
             float referenceFrequency = 2;
             float runtime = 1;
             float frequency = 1;
 
+            // Act
             float taskRuntime = AllocationService.GetTaskRuntime(referenceFrequency, runtime, frequency);
 
+            // Assert
             Assert.AreEqual(2, taskRuntime);
         }
 
@@ -132,6 +141,7 @@ namespace CloudApplicationDevTask1.Services.Tests
             // Act
             float allocationRuntime = AllocationService.GetAllocationRuntime(configFileContent, allocation);
 
+            // Assert
             Assert.AreEqual(2, Math.Round(allocationRuntime, 2));
         }
 
@@ -154,6 +164,7 @@ namespace CloudApplicationDevTask1.Services.Tests
             // Act
             string errorMsg = AllocationService.IsAllocationRuntimeValid(configFileContent, allocationRuntime);
        
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
     }

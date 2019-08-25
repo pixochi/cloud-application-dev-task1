@@ -21,6 +21,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsLogFilePath(configFileContent);
 
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
@@ -36,6 +37,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsLogFilePath(configFileContent);
 
+            // Assert
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["LogFilePath"], errorMsg);
         }
 
@@ -54,6 +56,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsLimitSection(configFileContent);
 
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
@@ -70,6 +73,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsLimitSection(configFileContent);
 
+            // Assert
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["LimitSection"], errorMsg);
         }
 
@@ -86,6 +90,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsParallelSection(configFileContent);
 
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
@@ -102,6 +107,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsParallelSection(configFileContent);
 
+            // Assert
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["ParallelSection"], errorMsg);
         }
 
@@ -118,6 +124,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsFrequency(configFileContent);
 
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
@@ -132,6 +139,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsFrequency(configFileContent);
 
+            // Assert
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["Frequency"], errorMsg);
         }
 
@@ -152,6 +160,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsRuntimes(configFileContent);
 
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
@@ -168,6 +177,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsRuntimes(configFileContent);
 
+            // Assert
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["Runtimes"], errorMsg);
         }
 
@@ -189,6 +199,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsRuntimes(configFileContent);
 
+            // Assert
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["RuntimesIds"], errorMsg);
         }
 
@@ -207,6 +218,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsProcessorFrequencies(configFileContent);
 
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
@@ -223,6 +235,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsProcessorFrequencies(configFileContent);
 
+            // Assert
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["ProcessorFrequencies"], errorMsg);
         }
 
@@ -242,6 +255,7 @@ namespace CloudApplictionDevTask1Tests
             // Act
             string errorMsg = ConfigFileValidator.ContainsProcessorFrequencies(configFileContent);
 
+            // Assert
             Assert.AreEqual(ConfigFileValidator.ConfigErrors["ProcessorFrequenciesIds"], errorMsg);
         }
 

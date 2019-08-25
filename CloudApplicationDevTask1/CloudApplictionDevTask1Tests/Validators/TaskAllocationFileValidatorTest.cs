@@ -10,77 +10,194 @@ namespace CloudApplictionDevTask1Tests
         [TestMethod]
         public void DataMixedWithCommentsIsInvalid()
         {
-            string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(TaskAllocationFileDummies.DataMixedWithComments());
+            // Arrange
+            string TANFileContent = @"
+                TASKS,5 // The number of tasks
+                PROCESSORS,3
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(TANFileContent);
+
+            // Assert
             Assert.AreNotEqual("", errorMsg);
         }
 
         [TestMethod]
         public void DataNotMixedWithCommentsIsValid()
         {
-            string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(TaskAllocationFileDummies.DataNotMixedWithComments());
+            // Arrange
+            string TANFileContent = @"
+                // The number of tasks
+                TASKS,5
+                PROCESSORS,3
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.DataMixedWithComments(TANFileContent);
+
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsValidConfigPath()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidConfigPath(TaskAllocationFileDummies.ValidConfigPath());
+            // Arrange
+            string TANFileContent = @"
+                CONFIGURATION,""C:\\temp\config.csv""
+                TASKS,5
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidConfigPath(TANFileContent);
+
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsInvalidConfigPath()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidConfigPath(TaskAllocationFileDummies.InvalidConfigPath());
+            // Arrange
+            string TANFileContent = @"
+                CONFIGURATION
+                TASKS,5
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidConfigPath(TANFileContent);
+
+            // Assert
             Assert.AreNotEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsValidTasksLine()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidTasksLine(TaskAllocationFileDummies.ValidTasksLine());
+            // Arrange
+            string TANFileContent = @"
+                CONFIGURATION,""C:\\temp\config.csv""
+                TASKS,5
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidTasksLine(TANFileContent);
+
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsInvalidTasksLine()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidTasksLine(TaskAllocationFileDummies.InvalidTasksLine());
+            // Arrange
+            string TANFileContent = @"
+                CONFIGURATION,""C:\\temp\config.csv""
+                TASKS,with a missing number
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidTasksLine(TANFileContent);
+
+            // Assert
             Assert.AreNotEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsValidProcessorsLine()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidProcessorsLine(TaskAllocationFileDummies.ValidProcessorsLine());
+            // Arrange
+            string TANFileContent = @"
+                TASKS,5
+                PROCESSORS,3
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidProcessorsLine(TANFileContent);
+
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsInvalidProcessorsLine()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidProcessorsLine(TaskAllocationFileDummies.InvalidProcessorsLine());
+            // Arrange
+            string TANFileContent = @"
+                TASKS,5
+                PROCESSORS,missing number
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidProcessorsLine(TANFileContent);
+
+            // Assert
             Assert.AreNotEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsValidAllocationsLine()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocationsLine(TaskAllocationFileDummies.ValidAllocationsLine());
+            // Arrange
+            string TANFileContent = @"
+                PROCESSORS,3
+                ALLOCATIONS,8
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocationsLine(TANFileContent);
+
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsInvalidAllocationsLine()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocationsLine(TaskAllocationFileDummies.InvalidAllocationsLine());
+            // Arrange
+            string TANFileContent = @"
+                PROCESSORS,3
+                ALLOCATIONS,missing number
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocationsLine(TANFileContent);
+
+            // Assert
             Assert.AreNotEqual("", errorMsg);
         }
 
         [TestMethod]
         public void ContainsValidAllocations()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocations(TaskAllocationFileDummies.ValidAllocations());
+            // Arrange
+            string TANFileContent = @"
+                // The number of tasks and processors per allocation.
+                TASKS,5
+                PROCESSORS,3
+
+                // The number of allocations in this file.
+                ALLOCATIONS,2
+
+                // The set of allocations.
+                // The ith row is the allocation of tasks to the ith processor.
+                // The jth column is the allocation of the jth task to a processor.
+                ALLOCATION-ID,1
+                1,1,0,0,0
+                0,0,1,1,0
+                0,0,0,0,1
+
+                ALLOCATION-ID,2
+                1,1,0,0,0
+                0,0,0,0,1
+                0,0,1,1,0
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocations(TANFileContent);
+
+            // Assert
             Assert.AreEqual("", errorMsg);
         }
 
@@ -88,14 +205,40 @@ namespace CloudApplictionDevTask1Tests
         [TestMethod]
         public void WrongAllocationCount()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocations(TaskAllocationFileDummies.InvalidAllocationCount());
+            // Arrange
+            string TANFileContent = @"
+                ALLOCATIONS,2
+
+                ALLOCATION-ID,1
+                1,1,0,0,0
+                0,0,1,1,0
+                0,0,0,0,1
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocations(TANFileContent);
+
+            // Assert
             Assert.AreEqual(TaskAllocationFileValidator.AllocationErrors["WrongAllocationCount"], errorMsg);
         }
 
         [TestMethod]
         public void InvalidTaskAllocation()
         {
-            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocations(TaskAllocationFileDummies.InvalidTaskAllocation());
+            // Arrange
+            string TANFileContent = @"
+                ALLOCATIONS,1
+
+                ALLOCATION-ID,1
+                1,1,0,0,0
+                1,0,1,1,0
+                0,0,0,0,1
+            ";
+
+            // Act
+            string errorMsg = TaskAllocationFileValidator.ContainsValidAllocations(TANFileContent);
+
+            // Assert
             Assert.AreEqual(TaskAllocationFileValidator.AllocationErrors["InvalidTaskAllocation"], errorMsg);
         }
     }
